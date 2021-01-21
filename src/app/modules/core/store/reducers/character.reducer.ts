@@ -1,17 +1,19 @@
-import { ICharacterState } from './../state/character.state';
+import { characterAdapter, ICharacterState } from './../state/character.state';
 import { createReducer, on, Action } from '@ngrx/store';
 
 import { initialCharacterState } from '../state/character.state';
-import * as characterPageAction from '../actions/character.action';
+import * as characterAction from '../actions/character.action';
 
 const _characterReducer = createReducer(
   initialCharacterState,
-  on(characterPageAction.getCharactersSuccess, (state, { characters }) => ({
-    ...state,
-    characters,
-  }))
+  on(characterAction.getCharactersSuccess, (state, { characters }) => {
+    return characterAdapter.setAll(characters, state);
+  })
 );
 
-export function characterReducer(state: ICharacterState | undefined, action: Action) {
+export function characterReducer(
+  state: ICharacterState | undefined,
+  action: Action
+) {
   return _characterReducer(state, action);
 }

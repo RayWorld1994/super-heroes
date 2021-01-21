@@ -1,11 +1,11 @@
-import { ICharacterState, initialCharacterState } from './character.state';
+import * as fromCharacter from './character.state';
 
 export interface IAppState {
-  characterState: ICharacterState;
+  characterState: fromCharacter.ICharacterState;
 }
 
 const _initialAppState: IAppState = {
-  characterState: initialCharacterState,
+  characterState: fromCharacter.initialCharacterState,
 };
 
 export const initialAppState: IAppState = _initialAppState;
