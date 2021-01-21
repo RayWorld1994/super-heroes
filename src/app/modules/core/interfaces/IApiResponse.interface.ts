@@ -1,4 +1,4 @@
-import { Data } from './data.interface';
+import { Data } from './character/data.interface';
 
 export interface IApiResponse<T> {
   code: string;
