@@ -11,22 +11,16 @@ const getSavedState = (key: string) => {
 };
 
 const localStorageKey = 'store';
-const stateKeys = [
-  'templates',
-  'requests',
-  'areas',
-  'authentication',
-  'issues',
-];
+const stateKeys = ['characterState'];
 
 export function storageMetaReducer<S, A extends Action = Action>(
   reducer: ActionReducer<S, A>
 ): ActionReducer<S, A> {
   let stored = false;
   return (state, action): S => {
-    console.log(state, action);
     const nextState = reducer(state, action);
     if (!stored) {
+      stored = true;
       const savedState = getSavedState(localStorageKey);
       return _.merge(nextState, savedState);
     }

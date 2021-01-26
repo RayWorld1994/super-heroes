@@ -1,8 +1,5 @@
-import { Stories } from './stories.interfaces';
-import { Comics } from './comics.interface';
+import { List } from './List.interfaces';
 import { Thumbnail } from './thumbnail.intarface';
-import { Events } from './events.interfaces';
-import { Series } from './series.interface';
 import { Url } from './url.interface';
 
 export interface Character {
@@ -13,8 +10,8 @@ export interface Character {
   resourceURI: string;
   urls: Url[];
   thumbnail: Thumbnail;
-  comics: Comics;
-  stories: Stories;
-  events: Events;
-  series: Series;
+  comics: List;
+  stories: List;
+  events: List;
+  series: List;
 }

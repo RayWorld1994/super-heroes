@@ -1,0 +1,19 @@
+<a [routerLink]="[character.id]" class="link-character">
+  <mat-card color="primary">
+    <mat-card-header>
+      <mat-card-title>{{ character.name }}</mat-card-title>
+    </mat-card-header>
+    <img
+      mat-card-image
+      [appThumbnailSize]="size"
+      [srcThumbnail]="character.thumbnail.path"
+      src-fallback="assets/marvel-default.jpg"
+      alt="Photo of a Hero"
+    />
+    <mat-card-content>
+      <p>
+        {{ character.description ? character.description : 'No description' }}
+      </p>
+    </mat-card-content>
+  </mat-card>
+</a>

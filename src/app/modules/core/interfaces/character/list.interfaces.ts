@@ -1,6 +1,6 @@
 import { Item } from "./item.interface";
 
-export interface Series {
+export interface List {
   available: string;
   returned: string;
   collectionURI: string;

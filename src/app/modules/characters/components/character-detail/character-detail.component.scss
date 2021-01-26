@@ -1,0 +1,76 @@
+@import './variables.scss';
+
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    'img header'
+    'img content'
+    'img content';
+  padding: 0;
+}
+
+
+
+.img-container {
+  grid-area: img;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: blur(20px);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .img-hero {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    margin: 20px 0;
+    z-index: 1;
+  }
+}
+
+.mat-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  grid-area: header;
+  background-color: rgba($color: $primary-color, $alpha: 0.8);
+  color: white;
+  z-index: 1;
+  padding: 5px 0;
+  text-align: center;
+
+  .mat-card-title {
+    margin: 0;
+  }
+}
+
+.mat-card-content {
+  z-index: 1;
+  grid-area: content;
+  background-color: white;
+  padding: 0 10px;
+}
+
+.mat-card-actions {
+  z-index: 1;
+  grid-area: action;
+}
+
+.description {
+  text-align: justify;
+  padding: 10px 0;
+}

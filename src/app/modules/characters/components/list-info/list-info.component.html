@@ -1,0 +1,13 @@
+<div class="list" *ngIf="dataList?.items?.length !== 0; else noItem">
+  <mat-list>
+    <mat-list-item
+      *ngFor="let element of dataList?.items | slice: 0:3; even as isEven"
+      [class]="{ even: isEven }"
+      ><a href="#">{{ element.name }}</a></mat-list-item
+    >
+  </mat-list>
+  <button mat-raised-button color="accent">See More...</button>
+</div>
+<ng-template #noItem>
+  <p>There is no element</p>
+</ng-template>

@@ -1,0 +1,11 @@
+@import './variables';
+
+.mat-card {
+  background-color: $accent-color;
+  max-width: 400px;
+  color: white;
+}
+
+.link-character {
+    text-decoration: none;
+}

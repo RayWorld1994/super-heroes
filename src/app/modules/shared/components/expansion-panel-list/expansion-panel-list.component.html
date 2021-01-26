@@ -1,0 +1,11 @@
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let list of lists">
+    <mat-expansion-panel-header>
+      <mat-panel-title>{{ list.type | titlecase }}</mat-panel-title>
+      <!-- <mat-panel-description>
+        This is a summary of the content
+      </mat-panel-description> -->
+    </mat-expansion-panel-header>
+    <app-list-info [dataList]="list?.list"></app-list-info>
+  </mat-expansion-panel>
+</mat-accordion>

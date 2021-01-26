@@ -1,0 +1,5 @@
+@import './variables.scss';
+
+.even {
+  background-color: rgba($color: $accent-color, $alpha: .1);
+}

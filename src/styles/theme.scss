@@ -1,0 +1,20 @@
+@import '~@angular/material/theming';
+@import './custom-palettes';
+
+@include mat-core();
+
+$marvel-theme-primary: mat-palette($marvel-big-stone);
+$marvel-theme-accent: mat-palette($marvel-Matisse, A200, A100, A400);
+$marvel-theme-warn: mat-palette($marvel-alizarin);
+
+$marvel-theme: mat-light-theme(
+  (
+    color: (
+      primary: $marvel-theme-primary,
+      accent: $marvel-theme-accent,
+      warn: $marvel-theme-warn,
+    ),
+  )
+);
+
+@include angular-material-theme($marvel-theme);
