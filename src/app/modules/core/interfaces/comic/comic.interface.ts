@@ -1,0 +1,43 @@
+import { List } from "../character/list.interfaces";
+import { Item } from "../item.interface";
+import { Thumbnail } from "../thumbnail.intarface";
+import { Url } from "../url.interface";
+import { CollectedIssue } from "./collected-issue.interface";
+import { Collection } from "./collection.interface";
+import { IDate } from "./date.interface";
+import { Image } from "./image.interface";
+import { Price } from "./price.interface";
+import { TextObject } from "./text-object.interface";
+import { Variant } from "./variant.interface";
+
+export interface Comic {
+  id: string;
+  digitalId: string;
+  title: string;
+  issueNumber: number;
+  variantDescription: string;
+  description: string;
+  modified: string;
+  isbn: string;
+  upc: string;
+  diamondCode: string;
+  ean: string;
+  issn: string;
+  format: string;
+  pageCount: string;
+  textObjects: TextObject[];
+  resourceURI: string;
+  urls: Url[];
+  series: Item;
+  variants: Variant[];
+  collections: Collection[];
+  collectedIssues: CollectedIssue[];
+  dates: IDate[];
+  prices: Price[];
+  thumbnail: Thumbnail;
+  images: Image[];
+  creators: List;
+  characters: List;
+  stories: List;
+  events: List;
+}

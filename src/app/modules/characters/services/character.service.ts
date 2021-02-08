@@ -3,27 +3,36 @@ import { map } from 'rxjs/operators';
 import { CharacterRequestService } from './../../core/services/character-request.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Data } from '../../core/interfaces/character/data.interface';
+import { Data } from '../../core/interfaces/data.interface';
 
 @Injectable({ providedIn: 'root' })
 export class CharacterService {
   constructor(private characterService: CharacterRequestService) {}
 
-  getCharacters(): Observable<Data<Character>> {
+  getCharacters(order: string): Observable<Data<Character[]>> {
     return this.characterService
-      .charactersRequest()
+      .charactersRequest(order)
       .pipe(map((apiResponse) => apiResponse.data));
   }
 
-  getCharacter(id: number): Observable<Data<Character>> {
+  getCharacter(id: number): Observable<Data<Character[]>> {
     return this.characterService
       .characterRequest(id)
       .pipe(map((apiResponse) => apiResponse.data));
   }
 
-  getMoreCharacters(offset: number) {
+  getMoreCharacters(
+    offset: number,
+    order: string
+  ): Observable<Data<Character[]>> {
     return this.characterService
-      .MoreCharactersRequest(offset)
+      .MoreCharactersRequest(offset, order)
+      .pipe(map((apiResponse) => apiResponse.data));
+  }
+
+  filterCharacterByName(name: string): Observable<Data<Character[]>> {
+    return this.characterService
+      .filterCharacterByNameRequest(name)
       .pipe(map((apiResponse) => apiResponse.data));
   }
 }

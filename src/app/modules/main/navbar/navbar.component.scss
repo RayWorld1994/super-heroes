@@ -7,9 +7,9 @@
 }
 
 .mat-sidenav-content {
-  overflow: visible;
   height: 100vh;
 }
+
 .sidenav .mat-toolbar {
   background: inherit;
 }
@@ -50,12 +50,22 @@
 }
 
 .content {
-  height: calc(100% - 64px);
-  padding: 50px 20px;
+  padding: 20px;
 }
 
-@media (max-width: 599px) {
-  .content {
-    height: calc(100% - 56px);
-  }
+.search {
+  color: white;
 }
+
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3;
+}
+
+// @media (max-width: 599px) {
+//   .content {
+//     height: calc(100% - 56px);
+//   }
+// }

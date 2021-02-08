@@ -11,7 +11,7 @@ const getSavedState = (key: string) => {
 };
 
 const localStorageKey = 'store';
-const stateKeys = ['characterState'];
+const stateKeys = ['characterState', 'comicState'];
 
 export function storageMetaReducer<S, A extends Action = Action>(
   reducer: ActionReducer<S, A>

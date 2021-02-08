@@ -8,6 +8,8 @@ export enum ECharacterActions {
   characterSelectedSuccess = '[Character Page] Get Character Success',
   getMoreCharacters = '[Character Page] Get More Characters',
   getMoreCharactersSuccess = '[Character Page] Get More Characters Success',
+  getCharactersSorted = '[Character Page] Get Characters Sorted ',
+  getCharactersSearched = '[Character Page] Get Characters Searched',
 }
 
 export const getCharacters = createAction(ECharacterActions.GetCharacters);
@@ -29,4 +31,11 @@ export const getMoreCharacters = createAction(
 export const getMoreCharactersSuccess = createAction(
   ECharacterActions.getMoreCharactersSuccess,
   props<{ characters: Character[]; offset: number }>()
+);
+export const filterByOrder = createAction(
+  ECharacterActions.getCharactersSorted
+);
+export const searchCharacter = createAction(
+  ECharacterActions.getCharactersSearched,
+  props<{ searchName: string }>()
 );

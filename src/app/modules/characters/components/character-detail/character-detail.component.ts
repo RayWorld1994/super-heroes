@@ -1,5 +1,5 @@
 import { takeUntil } from 'rxjs/operators';
-import { SizeThumbnail } from '../../../shared/utils/size-thumbnail.enum';
+import { ESizeThumbnail } from '../../../shared/utils/size-thumbnail.enum';
 import { Observable, Subject } from 'rxjs';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -22,7 +22,7 @@ export class CharacterDetailComponent implements OnInit {
     .select(characterSelectors.getCurrentCharacter)
     .pipe(takeUntil(this.MapSubscribe));
 
-  size = SizeThumbnail.detail;
+  size = ESizeThumbnail.detail;
 
   constructor(private store: Store, private route: ActivatedRoute) {}
 

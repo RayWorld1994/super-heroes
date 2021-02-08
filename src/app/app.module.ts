@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './modules/core/core.module';
 import { EffectsModule } from '@ngrx/effects';
 import { CharacterEffect } from './modules/core/store/effects/character.effects';
+import { ComicEffects } from './modules/core/store/effects/comic.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,7 +26,7 @@ import { CharacterEffect } from './modules/core/store/effects/character.effects'
       logOnly: environment.production,
     }),
     BrowserAnimationsModule,
-    EffectsModule.forRoot([CharacterEffect]),
+    EffectsModule.forRoot([CharacterEffect, ComicEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent],

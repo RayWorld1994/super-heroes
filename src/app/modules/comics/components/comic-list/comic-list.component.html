@@ -1,0 +1,16 @@
+<div class="btn-order">
+  <button mat-raised-button color="accent" (click)="sort()">
+    Order by title <fa-icon [icon]="icon"></fa-icon>
+  </button>
+</div>
+
+<div class="grid-container">
+  <!-- <app-character-item
+    *ngFor="let characterItem of characters"
+    [character]="characterItem"
+  ></app-character-item> -->
+  <app-card-item
+    *ngFor="let comicItem of comics"
+    [element]="comicItem"
+  ></app-card-item>
+</div>

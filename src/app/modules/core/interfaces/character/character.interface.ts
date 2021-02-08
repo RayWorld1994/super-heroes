@@ -1,6 +1,6 @@
-import { List } from './List.interfaces';
-import { Thumbnail } from './thumbnail.intarface';
-import { Url } from './url.interface';
+import { List } from './list.interfaces';
+import { Thumbnail } from '../thumbnail.intarface';
+import { Url } from '../url.interface';
 
 export interface Character {
   id: string;

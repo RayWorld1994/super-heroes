@@ -23,7 +23,7 @@ const routes: Routes = [
       {
         path: 'comics',
         loadChildren: () =>
-          import('../creators/creators.module').then((m) => m.CreatorsModule),
+          import('../comics/comics.module').then((m) => m.ComicsModule),
       },
       {
         path: 'events',

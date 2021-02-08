@@ -3,28 +3,21 @@
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-auto-rows: 1fr;
   gap: 10px;
-  overflow: auto;
-  height: 100%;
-  margin: 5px;
 }
 
-.example-viewport {
-  min-height: 700px;
-  height: 100%;
-  width: 100%;
+.btn-order {
+  margin: 10px 0;
+
 }
 
-.example-item {
-  height: 500px;
-}
+.button-toUp {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  opacity: 0.5;
+  transition: opacity 300ms ease;
 
-.cdk-virtual-scroll-content-wrapper{
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-auto-rows: 1fr;
-  gap: 10px;
+  &:hover {
+    opacity: 1;
+  }
 }
-// .container {
-//   overflow: auto;
-//   height: 100%;
-// }

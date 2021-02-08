@@ -13,24 +13,36 @@ export class CharacterRequestService {
 
   constructor(private http: HttpClient) {}
 
-  charactersRequest(): Observable<IApiResponse<Character>> {
-    return this.http.get<IApiResponse<Character>>(this._UrlApiCharacters, {});
+  charactersRequest(order: string): Observable<IApiResponse<Character[]>> {
+    const option = { params: { orderBy: order } };
+    return this.http.get<IApiResponse<Character[]>>(
+      this._UrlApiCharacters,
+      option
+    );
   }
 
-  MoreCharactersRequest(offset: number): Observable<IApiResponse<Character>> {
-    const options = offset
-      ? { params: new HttpParams().set('offset', offset.toString()) }
-      : {};
-
-    return this.http.get<IApiResponse<Character>>(
+  MoreCharactersRequest(
+    offset: number,
+    order: string
+  ): Observable<IApiResponse<Character[]>> {
+    const options = { params: { offset: offset.toString(), orderBy: order } };
+    return this.http.get<IApiResponse<Character[]>>(
       this._UrlApiCharacters,
       options
     );
   }
 
-  characterRequest(id: number): Observable<IApiResponse<Character>> {
-    return this.http.get<IApiResponse<Character>>(
+  characterRequest(id: number): Observable<IApiResponse<Character[]>> {
+    return this.http.get<IApiResponse<Character[]>>(
       `${this._UrlApiCharacters}/${id}`
+    );
+  }
+
+  filterCharacterByNameRequest(byName: string) {
+    const option = { params: { nameStartsWith: byName } };
+    return this.http.get<IApiResponse<Character[]>>(
+      this._UrlApiCharacters,
+      option
     );
   }
 }

@@ -1,4 +1,4 @@
-export enum SizeThumbnail {
+export enum ESizeThumbnail {
   portrait_small = 'portrait_small',
   portrait_medium = 'portrait_medium',
   portrait_xlarge = 'portrait_xlarge',

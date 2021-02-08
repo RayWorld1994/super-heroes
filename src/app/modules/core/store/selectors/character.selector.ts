@@ -37,7 +37,7 @@ export const getCurrentCharacter = createSelector(
   getCharactersEntities,
   getCurrentCharacterId,
   (characterEntities, characterId) => {
-    return characterId ? characterEntities[characterId] : undefined;
+    return characterEntities[characterId];
   }
 );
 export const getlistByCharacter = createSelector(
@@ -55,19 +55,46 @@ export const getOffset = createSelector(
   selectFeatureCharacter,
   (state) => state.offset
 );
+export const getOrderCharacter = createSelector(
+  selectFeatureCharacter,
+  (state) => state.filter.orderBy
+);
+
+export const getSeachName = createSelector(
+  selectFeatureCharacter,
+  (state) => state.filter.byName
+);
+
+export const searchByName = createSelector(
+  getSeachName,
+  getAllCharacters,
+  (name, characters) => {
+    console.log('Search Selector');
+    console.log(
+      characters.filter((character) =>
+        character.name.toLowerCase().startsWith(name.toLowerCase())
+      )
+    );
+    return name
+      ? characters.filter((character) => character.name.startsWith(name))
+      : characters;
+  }
+);
+
 export const charactersSort = createSelector(
   selectFeatureCharacter,
-  getAllCharacters,
+  searchByName,
   (state, characters) => {
-    switch (state.orderBy) {
+    switch (state.filter.orderBy) {
       case EOrderBy.OrderAtoZ:
         return characters.sort((a, b) =>
           a.name == b.name ? 0 : a.name > b.name ? 1 : -1
         );
       case EOrderBy.OrderZtoA:
-        return characters.sort((a, b) =>
+        const l = characters.sort((a, b) =>
           a.name == b.name ? 0 : a.name < b.name ? 1 : -1
         );
+        return l;
       default:
         return characters;
     }
@@ -77,5 +104,8 @@ export const charactersSort = createSelector(
 export const getCharacterOnScreen = createSelector(
   charactersSort,
   getOffset,
-  (characters, offset) => characters?.slice(0, offset)
+  getOrderCharacter,
+  (characters, offset) => {
+    return [...characters]?.slice(0, offset);
+  }
 );

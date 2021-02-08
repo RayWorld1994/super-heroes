@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@import './variables';
+
 * {
   box-sizing: border-box;
 }
@@ -17,15 +19,35 @@ a {
   color: inherit;
 }
 
+* {
+  scroll-behavior: smooth;
+}
+
+// ::-webkit-scrollbar {
+//   width: 15px;
+// }
+// ::-webkit-scrollbar-thumb {
+//   background-image: linear-gradient(45deg, #00aeff, #a68eff);
+//   border-radius: 10px;
+//   box-shadow: rgba(0, 0, 0, 0.12) 0 3px 13px 1px;
+// }
+
 ::-webkit-scrollbar {
-  width: 15px;
+  width: 12px;
+  background-color: #f5f5f5;
 }
-::-webkit-scrollbar-track {
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.1);
-}
+
 ::-webkit-scrollbar-thumb {
-  background-image: linear-gradient(45deg, #00aeff, #a68eff);
   border-radius: 10px;
-  box-shadow: rgba(0,0,0,.12) 0 3px 13px 1px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #4285f4;
+}
+
+.snackbar-error {
+  background-color: $primary-color;
+  color: white;
+}
+
+.tooltip {
+  font-size: 15px;
 }

@@ -1,3 +1,9 @@
+<mat-progress-bar
+  class="loading"
+  mode="indeterminate"
+  color="warn"
+  *ngIf="isLoading | async"
+></mat-progress-bar>
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav
     color="primary"
@@ -40,8 +46,11 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>{{ title | uppercase }}</span>
+      <button class="search" mat-button color="primary" (click)="search()">
+        <mat-icon>search</mat-icon> Search
+      </button>
     </mat-toolbar>
-    <div class="content">
+    <div class="content" #content>
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>

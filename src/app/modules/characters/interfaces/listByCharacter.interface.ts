@@ -1,4 +1,4 @@
-import { List } from "../../core/interfaces/character/List.interfaces";
+import { List } from "../../core/interfaces/character/list.interfaces";
 
 export interface ListByCharacter {
   type: string;

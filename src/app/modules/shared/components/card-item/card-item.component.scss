@@ -1,0 +1,26 @@
+@import './variables';
+
+.mat-card {
+  background-color: $accent-color;
+  color: white;
+  height: 100%;
+  max-height: 600px;
+}
+
+
+
+.description {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.mat-card-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+

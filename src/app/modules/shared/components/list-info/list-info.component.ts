@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { List } from 'src/app/modules/core/interfaces/character/List.interfaces';
+import { List } from 'src/app/modules/core/interfaces/character/list.interfaces';
 
 @Component({
   selector: 'app-list-info',

@@ -1,21 +1,27 @@
+import { FilterCharacter } from './../../interfaces/filter.character';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Character } from '../../interfaces/character/character.interface';
 import { EOrderBy } from '../../utils/eorder-by.enum';
 
 export interface ICharacterState extends EntityState<Character> {
-  selectedCharacterId: number | null;
-  charactersOnScreenIds: number[];
+  selectedCharacterId: number;
   offset: number;
-  orderBy: string;
+  filter: FilterCharacter;
+  bookmark: number[];
 }
 
 export const characterAdapter: EntityAdapter<Character> = createEntityAdapter<Character>();
 
 export const initialCharacterState: ICharacterState = characterAdapter.getInitialState(
   {
-    selectedCharacterId: null,
-    charactersOnScreenIds: [],
+    selectedCharacterId: 0,
     offset: 0,
-    orderBy: EOrderBy.OrderAtoZ,
+    filter: {
+      orderBy: EOrderBy.OrderAtoZ,
+      byComic: '',
+      byName: '',
+      byStory: '',
+    },
+    bookmark: [],
   }
 );
