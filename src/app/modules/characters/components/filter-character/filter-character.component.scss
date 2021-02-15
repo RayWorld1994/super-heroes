@@ -1,0 +1,17 @@
+.input-character {
+  width: 100%;
+}
+
+.wrapper-input {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  .mat-form-field {
+    flex: 400px;
+  }
+}
+
+.btn-submit {
+  margin-top: 10px;
+}

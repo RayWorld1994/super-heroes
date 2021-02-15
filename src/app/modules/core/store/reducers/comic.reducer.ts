@@ -25,7 +25,6 @@ export const comicReducer = createReducer(
     offset: state.offset + 20,
   })),
   on(comicActions.getMoreComicsSuccess, (state, { comics, offset }) => {
-    console.log('here');
     return {
       ...comicAdapter.addMany(comics, state),
       offset: offset,
@@ -43,9 +42,6 @@ export const comicReducer = createReducer(
       state.orderBy === EOrderComicBy.titleAtoZ
         ? EOrderComicBy.titleZtoA
         : EOrderComicBy.titleAtoZ;
-    console.log(state.orderBy === EOrderComicBy.titleAtoZ);
-    console.log(state.orderBy);
-    console.log(state);
     return { ...state, offset: 20, orderBy };
   })
 );

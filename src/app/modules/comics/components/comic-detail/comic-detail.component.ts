@@ -15,9 +15,9 @@ import * as comicActions from 'src/app/modules/core/store/actions/comic.action';
 })
 export class ComicDetailComponent implements OnInit {
   size = ESizeThumbnail.detail;
-  comic$: Observable<Comic > = this.store.select(
+  comic$ = this.store.select(
     comicSelectors.getCurrentComic
-  ).pipe(tap(console.log));
+  ) as Observable<Comic>;
 
   constructor(
     private store: Store,

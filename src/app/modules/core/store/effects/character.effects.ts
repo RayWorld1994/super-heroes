@@ -20,18 +20,21 @@ import { Store } from '@ngrx/store';
 export class CharacterEffect {
   getCharacters$ = createEffect(() =>
     this.action$.pipe(
-      tap((action) => console.log(action)),
-      ofType(characterAction.getCharacters, characterAction.filterByOrder),
-      concatMap((action) =>
-        of(action).pipe(
-          withLatestFrom(this.store.select(characterSeletors.getOrderCharacter))
-        )
-      ),
-      mergeMap(([_, order]) =>
-        this.characterService.getCharacters(order).pipe(
-          map((data) =>
-            characterAction.getCharactersSuccess({ characters: data.results })
-          ),
+      ofType(characterAction.getCharacters),
+      mergeMap(() =>
+        this.characterService.getCharacters().pipe(
+          map((data) => {
+            const ids = data.results.map((character) => character.id);
+            return characterAction.getCharactersSuccess({
+              characters: data.results,
+              scrolling: {
+                offset: data.offset,
+                total: data.total,
+                limit: data.limit,
+              },
+              ids,
+            });
+          }),
           catchError(() => EMPTY)
         )
       )
@@ -61,20 +64,30 @@ export class CharacterEffect {
         of(action).pipe(
           withLatestFrom(
             this.store.select(characterSeletors.getOffset),
-            this.store.select(characterSeletors.getOrderCharacter)
+            this.store.select(characterSeletors.getFilter)
           )
         )
       ),
-      exhaustMap(([_, offset, order]) =>
-        this.characterService.getMoreCharacters(offset, order).pipe(
-          map((data) =>
-            characterAction.getMoreCharactersSuccess({
-              characters: data.results,
-              offset: +data.offset,
-            })
-          ),
-          catchError(() => EMPTY)
-        )
+      concatMap(([_, offset, filter]) =>
+        this.characterService
+          .getCharacters({
+            offset: offset + '',
+            orderBy: filter.orderBy,
+            nameStartsWith: filter.byName,
+            comics: filter.byComic,
+            stories: filter.byStory,
+          })
+          .pipe(
+            map((data) => {
+              const ids = data.results.map(({ id }) => id);
+              return characterAction.getMoreCharactersSuccess({
+                characters: data.results,
+                offset: data.offset,
+                ids,
+              });
+            }),
+            catchError(() => EMPTY)
+          )
       )
     )
   );
@@ -82,34 +95,91 @@ export class CharacterEffect {
   searchCharacterByName$ = createEffect(() =>
     this.action$.pipe(
       ofType(characterAction.searchCharacter),
-      tap((action) => console.log(action)),
       concatMap((action) =>
-        this.characterService.filterCharacterByName(action.searchName).pipe(
-          map((data) =>
-            characterAction.getCharactersSuccess({
-              characters: data.results,
-            })
-          ),
-          catchError(() => EMPTY)
-        )
+        this.characterService
+          .getCharacters({ nameStartsWith: action.searchName })
+          .pipe(
+            map((data) => {
+              const ids = data.results.map(({ id }) => id);
+              return characterAction.getCharactersSuccess({
+                characters: data.results,
+                scrolling: {
+                  offset: data.offset,
+                  limit: data.limit,
+                  total: data.total,
+                },
+                ids,
+              });
+            }),
+            catchError(() => EMPTY)
+          )
       )
     )
   );
-  // sortCharacter$ = createEffect(() =>
-  //   this.action$.pipe(
-  //     ofType(characterAction.filterByOrder),
-  //     concatMap(action => of(action).pipe(withLatestFrom(this.store.select(characterSeletors.getOrderCharacter))))
-  //     switchMap(() =>
-  //       this.characterService
-  //         .getCharacters()
-  //         .pipe(
-  //           map((data) =>
-  //             characterAction.filterByOrderSucess({ characters: data.results })
-  //           )
-  //         )
-  //     )
-  //   )
-  // );
+
+  filterCharacters$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(characterAction.filterCharacters),
+      exhaustMap((action) =>
+        this.characterService
+          .getCharacters({
+            nameStartsWith: action.filter.byName,
+            stories: action.filter.byStory,
+            comics: action.filter.byComic,
+          })
+          .pipe(
+            map((data) => {
+              const ids = data.results.map(({ id }) => id);
+              return characterAction.getCharactersSuccess({
+                characters: data.results,
+                scrolling: {
+                  offset: data.offset,
+                  limit: data.limit,
+                  total: data.total,
+                },
+                ids,
+              });
+            }),
+            catchError(() => EMPTY)
+          )
+      )
+    )
+  );
+
+  sortCharacter$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(characterAction.filterByOrder),
+      concatMap((action) =>
+        of(action).pipe(
+          withLatestFrom(this.store.select(characterSeletors.getFilter))
+        )
+      ),
+      switchMap(([_, filter]) =>
+        this.characterService
+          .getCharacters({
+            orderBy: filter.orderBy,
+            nameStartsWith: filter.byName,
+            stories: filter.byStory,
+            comics: filter.byComic,
+          })
+          .pipe(
+            tap((data) => console.log(data)),
+            map((data) => {
+              const ids = data.results.map(({ id }) => id);
+              return characterAction.getCharactersSuccess({
+                characters: data.results,
+                scrolling: {
+                  offset: data.offset,
+                  limit: data.limit,
+                  total: data.total,
+                },
+                ids,
+              });
+            })
+          )
+      )
+    )
+  );
 
   constructor(
     private action$: Actions,

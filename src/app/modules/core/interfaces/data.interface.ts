@@ -1,7 +1,7 @@
 export interface Data<T> {
-  offset: string;
-  limit: string;
-  total: string;
-  count: string;
+  offset: number;
+  limit: number;
+  total: number;
+  count: number;
   results: T;
 }

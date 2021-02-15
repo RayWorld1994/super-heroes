@@ -18,9 +18,9 @@ export class CharacterDetailComponent implements OnInit {
   MapSubscribe = new Subject<void>();
   listsByCharacter!: ListByCharacter[];
 
-  character$: Observable<Character | undefined> = this.store
-    .select(characterSelectors.getCurrentCharacter)
-    .pipe(takeUntil(this.MapSubscribe));
+  character$ = this.store.select(
+    characterSelectors.getCurrentCharacter
+  ) as Observable<Character>;
 
   size = ESizeThumbnail.detail;
 

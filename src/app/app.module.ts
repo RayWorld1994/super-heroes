@@ -20,7 +20,7 @@ import { ComicEffects } from './modules/core/store/effects/comic.effects';
     BrowserModule,
     CoreModule,
     AppRoutingModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
+    StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,

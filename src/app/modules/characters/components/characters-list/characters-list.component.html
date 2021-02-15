@@ -1,15 +1,26 @@
-<div class="btn-order">
-  <button mat-raised-button color="accent" (click)="sort()">
-    Order <fa-icon [icon]="icon"></fa-icon>
-  </button>
+<div class="filter-character">
+  <div class="btn">
+    <button mat-raised-button color="accent" (click)="sort()">
+      Order <fa-icon [icon]="icon"></fa-icon>
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      (click)="searchActivated = !searchActivated"
+    >
+      Search<mat-icon>search</mat-icon>
+    </button>
+  </div>
+  <app-filter-character *ngIf="searchActivated"></app-filter-character>
 </div>
+
 <div class="grid-container" #container>
   <!-- <app-character-item
     *ngFor="let characterItem of characters"
     [character]="characterItem"
   ></app-character-item> -->
   <app-card-item
-    *ngFor="let characterItem of characters"
+    *ngFor="let characterItem of characters | async"
     [element]="characterItem"
   ></app-card-item>
 </div>

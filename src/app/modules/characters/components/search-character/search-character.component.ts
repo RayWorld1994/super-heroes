@@ -25,7 +25,6 @@ export class SearchCharacterComponent implements OnInit {
 
   onSubmit() {
     if (this.searchForm.valid) {
-      console.log(this.searchForm.get('byName')?.value);
 
       this.store.dispatch(
         characterAction.searchCharacter({

@@ -32,7 +32,6 @@ export const getMoreComicsSuccess = createAction(
 );
 export const sortByIssueNumber = createAction(
   EComicActions.getComicsSortedByIssue
-)
-export const sortByTitle = createAction(
-  EComicActions.getComicsSortedByTitle
-)
+);
+export const sortByTitle = createAction(EComicActions.getComicsSortedByTitle);
+

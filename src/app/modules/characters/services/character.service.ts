@@ -1,3 +1,4 @@
+import { ParametersHttp } from './../../core/interfaces/parametersHttp.interface';
 import { Character } from './../../core/interfaces/character/character.interface';
 import { map } from 'rxjs/operators';
 import { CharacterRequestService } from './../../core/services/character-request.service';
@@ -9,9 +10,9 @@ import { Data } from '../../core/interfaces/data.interface';
 export class CharacterService {
   constructor(private characterService: CharacterRequestService) {}
 
-  getCharacters(order: string): Observable<Data<Character[]>> {
+  getCharacters(parameter?: ParametersHttp): Observable<Data<Character[]>> {
     return this.characterService
-      .charactersRequest(order)
+      .charactersRequest(parameter)
       .pipe(map((apiResponse) => apiResponse.data));
   }
 
@@ -21,14 +22,11 @@ export class CharacterService {
       .pipe(map((apiResponse) => apiResponse.data));
   }
 
-  getMoreCharacters(
-    offset: number,
-    order: string
-  ): Observable<Data<Character[]>> {
-    return this.characterService
-      .MoreCharactersRequest(offset, order)
-      .pipe(map((apiResponse) => apiResponse.data));
-  }
+  // getMoreCharacters(parameter: ParametersHttp): Observable<Data<Character[]>> {
+  //   return this.characterService
+  //     .MoreCharactersRequest(parameter)
+  //     .pipe(map((apiResponse) => apiResponse.data));
+  // }
 
   filterCharacterByName(name: string): Observable<Data<Character[]>> {
     return this.characterService

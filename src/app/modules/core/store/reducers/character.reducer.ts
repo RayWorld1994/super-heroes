@@ -9,12 +9,29 @@ const _characterReducer = createReducer(
   initialCharacterState,
   on(characterAction.getCharacters, (state) => ({
     ...state,
-    offset: 20,
-    filter: { ...state.filter, orderBy: EOrderBy.OrderAtoZ, byName: '' },
+    scrolling: { ...state.scrolling, offset: 0 },
+    filter: {
+      ...state.filterOption,
+      orderBy: EOrderBy.OrderAtoZ,
+      byName: '',
+      byComic: '',
+      byStory: '',
+    },
   })),
-  on(characterAction.getCharactersSuccess, (state, { characters }) => {
-    return characterAdapter.upsertMany(characters, state);
-  }),
+  on(
+    characterAction.getCharactersSuccess,
+    (state, { characters, scrolling, ids }) => {
+      return {
+        ...characterAdapter.upsertMany(characters, state),
+        scrolling: {
+          ...state.scrolling,
+          total: scrolling.total,
+          limit: scrolling.limit,
+        },
+        characterListId: ids,
+      };
+    }
+  ),
   on(characterAction.characterSelected, (state, { id }) => ({
     ...state,
     selectedCharacterId: id,
@@ -22,30 +39,48 @@ const _characterReducer = createReducer(
   on(characterAction.characterSelectedSuccess, (state, { character }) => {
     return characterAdapter.upsertOne(character, state);
   }),
-  on(characterAction.getMoreCharacters, (state) => ({
-    ...state,
-    offset: state.offset + 20,
-  })),
-  on(
-    characterAction.getMoreCharactersSuccess,
-    (state, { characters, offset }) => {
-      return {
-        ...characterAdapter.addMany(characters, state),
-        offset: offset,
-      };
-    }
-  ),
+  on(characterAction.getMoreCharacters, (state) => {
+    const offset =
+      state.scrolling.offset + 20 > state.scrolling.total
+        ? state.scrolling.total
+        : state.scrolling.offset + 20;
+    return {
+      ...state,
+      scrolling: { ...state.scrolling, offset },
+    };
+  }),
+  on(characterAction.getMoreCharactersSuccess, (state, { characters, ids }) => {
+    return {
+      ...characterAdapter.addMany(characters, state),
+      scrolling: { ...state.scrolling },
+      characterListId: [...state.characterListId, ...ids],
+    };
+  }),
   on(characterAction.filterByOrder, (state) => {
     const orderBy =
-      state.filter.orderBy === EOrderBy.OrderAtoZ
+      state.filterOption.orderBy === EOrderBy.OrderAtoZ
         ? EOrderBy.OrderZtoA
         : EOrderBy.OrderAtoZ;
-    return { ...state, offset: 20, filter: { ...state.filter, orderBy } };
+    return {
+      ...state,
+      scrolling: { ...state.scrolling, offset: 0 },
+      filterOption: { ...state.filterOption, orderBy },
+    };
   }),
   on(characterAction.searchCharacter, (state, { searchName }) => ({
     ...state,
-    offset: 20,
-    filter: { ...state.filter, byName: searchName },
+    scrolling: { ...state.scrolling, offset: 0 },
+    filterOption: { ...state.filterOption, byName: searchName },
+  })),
+  on(characterAction.filterCharacters, (state, { filter }) => ({
+    ...state,
+    scrolling: { ...state.scrolling, offset: 0 },
+    filterOption: {
+      ...state.filterOption,
+      byName: filter.byName,
+      byComic: filter.byComic,
+      byStory: filter.byStory,
+    },
   }))
 );
 

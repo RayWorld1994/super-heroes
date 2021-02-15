@@ -17,6 +17,12 @@ export class ComicService {
       .pipe(map((apiResponse) => apiResponse.data));
   }
 
+  comicsAutoComplete(comicTitle: string): Observable<Comic[]> {
+    return this.comicService
+      .comicsAutoCompleteRequest(comicTitle)
+      .pipe(map((apiResponse) => apiResponse.data.results));
+  }
+
   getcomic(id: number): Observable<Data<Comic[]>> {
     return this.comicService
       .comicRequest(id)

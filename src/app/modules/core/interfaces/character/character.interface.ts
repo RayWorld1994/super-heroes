@@ -3,7 +3,7 @@ import { Thumbnail } from '../thumbnail.intarface';
 import { Url } from '../url.interface';
 
 export interface Character {
-  id: string;
+  id: number;
   name: string;
   description: string;
   modified: string;

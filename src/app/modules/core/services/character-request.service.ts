@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Character } from '../interfaces/character/character.interface';
 import { IApiResponse } from '../interfaces/IApiResponse.interface';
+import { ParametersHttp } from '../interfaces/parametersHttp.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -13,19 +14,24 @@ export class CharacterRequestService {
 
   constructor(private http: HttpClient) {}
 
-  charactersRequest(order: string): Observable<IApiResponse<Character[]>> {
-    const option = { params: { orderBy: order } };
-    return this.http.get<IApiResponse<Character[]>>(
-      this._UrlApiCharacters,
-      option
-    );
-  }
+  // charactersRequest(order: string): Observable<IApiResponse<Character[]>> {
+  //   const option = { params: { orderBy: order } };
+  //   return this.http.get<IApiResponse<Character[]>>(
+  //     this._UrlApiCharacters,
+  //     option
+  //   );
+  // }
 
-  MoreCharactersRequest(
-    offset: number,
-    order: string
+  charactersRequest(
+    parameters?: ParametersHttp
   ): Observable<IApiResponse<Character[]>> {
-    const options = { params: { offset: offset.toString(), orderBy: order } };
+    const params = parameters
+      ? Object.entries(parameters).reduce(
+          (accu, [key, value]) => (value ? { ...accu, [key]: value } : accu),
+          {}
+        )
+      : {};
+    const options = { params };
     return this.http.get<IApiResponse<Character[]>>(
       this._UrlApiCharacters,
       options

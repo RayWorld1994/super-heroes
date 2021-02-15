@@ -15,16 +15,12 @@ import { ThumbnailSizeDirective } from './directives/thumbnail-size.directive';
 import { CardItemComponent } from './components/card-item/card-item.component';
 import { ExpansionPanelListComponent } from './components/expansion-panel-list/expansion-panel-list.component';
 import { ListInfoComponent } from './components/list-info/list-info.component';
-import { SearchComponent } from './components/search/search.component';
-import { ToggleSearchDirective } from './directives/toggle-search.directive';
 
 const declarations = [
   ThumbnailSizeDirective,
   CardItemComponent,
   ExpansionPanelListComponent,
   ListInfoComponent,
-  SearchComponent,
-  ToggleSearchDirective,
 ];
 
 const AngularMaterial = [

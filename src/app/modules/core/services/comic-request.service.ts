@@ -18,6 +18,13 @@ export class ComicRequestService {
     return this.http.get<IApiResponse<Comic[]>>(this._UrlApiComics, options);
   }
 
+  comicsAutoCompleteRequest(
+    titleComic: string
+  ): Observable<IApiResponse<Comic[]>> {
+    const options = { params: { titleStartsWith: titleComic, limit: '5' } };
+    return this.http.get<IApiResponse<Comic[]>>(this._UrlApiComics, options);
+  }
+
   MoreComicsRequest(
     offset: number,
     orderBy: string

@@ -1,5 +1,5 @@
 export interface FilterCharacter {
-  orderBy: string;
+  orderBy?: string;
   byComic: string;
   byStory: string;
   byName: string;

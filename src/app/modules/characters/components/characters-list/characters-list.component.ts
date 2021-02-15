@@ -1,6 +1,6 @@
+import { Character } from 'src/app/modules/core/interfaces/character/character.interface';
 import { EOrderBy } from './../../../core/utils/eorder-by.enum';
-import { Subject } from 'rxjs';
-import { Character } from '../../../core/interfaces/character/character.interface';
+import { Subject, Observable } from 'rxjs';
 import { CharacterService } from '../../services/character.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -22,9 +22,10 @@ import {
 })
 export class CharactersListComponent implements OnInit {
   @ViewChild('container') divContainer!: ElementRef<HTMLDivElement>;
-  characters: Character[] = [];
+  characters!: Observable<Character[]>;
   mapSubscription = new Subject();
   icon!: IconDefinition;
+  searchActivated = false;
 
   constructor(
     private store: Store,
@@ -33,13 +34,11 @@ export class CharactersListComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(characterAction.getCharacters());
-    this.store
-      .select(characterSelectors.getCharacterOnScreen).pipe(takeUntil(this.mapSubscription))
-      .subscribe((characters) => {
-        this.characters = characters;
-      });
+    this.characters = <Observable<Character[]>>(
+      this.store.select(characterSelectors.getCharacterOnScreen)
+    );
+
     this.scrollEvent();
-    this.getSort();
   }
 
   scrollEvent() {
@@ -62,14 +61,14 @@ export class CharactersListComponent implements OnInit {
       .scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  getSort() {
-    return this.store
-      .select(characterSelectors.getOrderCharacter)
-      .subscribe((order) => {
-        this.icon =
-          order === EOrderBy.OrderAtoZ ? faSortAlphaDown : faSortAlphaUp;
-      });
-  }
+  // getSort() {
+  //   return this.store
+  //     .select(characterSelectors.getOrderCharacter)
+  //     .subscribe((order) => {
+  //       this.icon =
+  //         order === EOrderBy.OrderAtoZ ? faSortAlphaDown : faSortAlphaUp;
+  //     });
+  // }
 
   sort() {
     this.store.dispatch(characterAction.filterByOrder());

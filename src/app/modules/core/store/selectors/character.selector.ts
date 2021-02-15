@@ -53,59 +53,64 @@ export const getlistByCharacter = createSelector(
 );
 export const getOffset = createSelector(
   selectFeatureCharacter,
-  (state) => state.offset
+  (state) => state.scrolling.offset
 );
+
+export const getFilter = createSelector(
+  selectFeatureCharacter,
+  (state) => state.filterOption
+);
+
 export const getOrderCharacter = createSelector(
-  selectFeatureCharacter,
-  (state) => state.filter.orderBy
+  getFilter,
+  (filter) => filter.orderBy
 );
 
-export const getSeachName = createSelector(
-  selectFeatureCharacter,
-  (state) => state.filter.byName
+export const getSearchName = createSelector(
+  getFilter,
+  (filter) => filter.byName
 );
 
-export const searchByName = createSelector(
-  getSeachName,
-  getAllCharacters,
-  (name, characters) => {
-    console.log('Search Selector');
-    console.log(
-      characters.filter((character) =>
-        character.name.toLowerCase().startsWith(name.toLowerCase())
-      )
-    );
-    return name
-      ? characters.filter((character) => character.name.startsWith(name))
-      : characters;
-  }
-);
+// export const searchByName = createSelector(
+//   getSearchName,
+//   getAllCharacters,
+//   (name, characters) => {
+//     return name
+//       ? characters.filter((character) =>
+//           character.name.toLowerCase().startsWith(name.toLowerCase())
+//         )
+//       : characters;
+//   }
+// );
 
-export const charactersSort = createSelector(
+// export const charactersSort = createSelector(
+//   selectFeatureCharacter,
+//   searchByName,
+//   (state, characters) => {
+//     switch (state.filterOption.orderBy) {
+//       case EOrderBy.OrderAtoZ:
+//         return characters.sort((a, b) =>
+//           a.name == b.name ? 0 : a.name > b.name ? 1 : -1
+//         );
+//       case EOrderBy.OrderZtoA:
+//         const l = characters.sort((a, b) =>
+//           a.name == b.name ? 0 : a.name < b.name ? 1 : -1
+//         );
+//         return l;
+//       default:
+//         return characters;
+//     }
+//   }
+// );
+export const getCharacterHashIds = createSelector(
   selectFeatureCharacter,
-  searchByName,
-  (state, characters) => {
-    switch (state.filter.orderBy) {
-      case EOrderBy.OrderAtoZ:
-        return characters.sort((a, b) =>
-          a.name == b.name ? 0 : a.name > b.name ? 1 : -1
-        );
-      case EOrderBy.OrderZtoA:
-        const l = characters.sort((a, b) =>
-          a.name == b.name ? 0 : a.name < b.name ? 1 : -1
-        );
-        return l;
-      default:
-        return characters;
-    }
-  }
+  (state) => state.characterListId
 );
 
 export const getCharacterOnScreen = createSelector(
-  charactersSort,
-  getOffset,
-  getOrderCharacter,
-  (characters, offset) => {
-    return [...characters]?.slice(0, offset);
+  getCharactersEntities,
+  getCharacterHashIds,
+  (entities, ids) => {
+    return ids.map((id) => entities[id]);
   }
 );

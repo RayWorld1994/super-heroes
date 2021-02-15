@@ -5,8 +5,11 @@
   gap: 10px;
 }
 
-.btn-order {
+.btn {
   margin: 10px 0;
+  display: flex;
+  gap: 10px;
+
 
 }
 
@@ -20,4 +23,8 @@
   &:hover {
     opacity: 1;
   }
+}
+
+.filter-character {
+  margin-bottom: 10px;
 }
