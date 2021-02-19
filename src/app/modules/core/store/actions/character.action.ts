@@ -14,6 +14,7 @@ export enum ECharacterActions {
   getCharactersSearched = '[Character Page] Get Characters Searched',
   getCharactersFiltered = '[Character Page] Get characters Filtered',
   getCharactersFilteredSuccess = '[Character Page] Get Character Filtered Success',
+  cancelFilterCharacter = '[Character Page] Cancel Filter Characters'
 }
 
 export const getCharacters = createAction(ECharacterActions.GetCharacters);
@@ -55,3 +56,4 @@ export const filterCharactersSuccess = createAction(
   ECharacterActions.getCharactersFilteredSuccess,
   props<{ characters: Character[] }>()
 );
+export const cancelFilter = createAction(ECharacterActions.cancelFilterCharacter);

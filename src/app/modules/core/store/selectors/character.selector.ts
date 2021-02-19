@@ -102,6 +102,11 @@ export const getSearchName = createSelector(
 //     }
 //   }
 // );
+export const getIsFiltered = createSelector(
+  selectFeatureCharacter,
+  ({ isFiltered }) => isFiltered
+);
+
 export const getCharacterHashIds = createSelector(
   selectFeatureCharacter,
   (state) => state.characterListId

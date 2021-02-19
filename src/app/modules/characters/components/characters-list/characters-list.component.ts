@@ -1,24 +1,36 @@
 import { Character } from 'src/app/modules/core/interfaces/character/character.interface';
 import { EOrderBy } from './../../../core/utils/eorder-by.enum';
 import { Subject, Observable } from 'rxjs';
-import { CharacterService } from '../../services/character.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as characterSelectors from '../../../core/store/selectors/character.selector';
 import * as characterAction from 'src/app/modules/core/store/actions/character.action';
-import { CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
-import { Event } from '@angular/router';
+import { ScrollDispatcher } from '@angular/cdk/scrolling';
 import { takeUntil } from 'rxjs/operators';
 import {
   faSortAlphaDown,
+  faSortAlphaDownAlt,
   faSortAlphaUp,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-characters-list',
   templateUrl: './characters-list.component.html',
   styleUrls: ['./characters-list.component.scss'],
+  animations: [
+    trigger('filter', [
+      transition(':enter', [
+        style({ height: 0 }),
+        animate('200ms ease-out', style({ height: '*' })),
+      ]),
+      transition(':leave', [
+        style({ height: '*' }),
+        animate('200ms ease-in-out', style({ height: '0px' })),
+      ]),
+    ]),
+  ],
 })
 export class CharactersListComponent implements OnInit {
   @ViewChild('container') divContainer!: ElementRef<HTMLDivElement>;
@@ -26,6 +38,7 @@ export class CharactersListComponent implements OnInit {
   mapSubscription = new Subject();
   icon!: IconDefinition;
   searchActivated = false;
+  isFiltered!: boolean;
 
   constructor(
     private store: Store,
@@ -33,12 +46,19 @@ export class CharactersListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(characterAction.getCharacters());
+    this.dispatchGetCharacters();
     this.characters = <Observable<Character[]>>(
       this.store.select(characterSelectors.getCharacterOnScreen)
     );
-
+    this.store
+      .select(characterSelectors.getIsFiltered)
+      .subscribe((isFiltered) => (this.isFiltered = isFiltered));
     this.scrollEvent();
+    this.getSort();
+  }
+
+  dispatchGetCharacters() {
+    this.store.dispatch(characterAction.getCharacters());
   }
 
   scrollEvent() {
@@ -61,22 +81,36 @@ export class CharactersListComponent implements OnInit {
       .scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // getSort() {
-  //   return this.store
-  //     .select(characterSelectors.getOrderCharacter)
-  //     .subscribe((order) => {
-  //       this.icon =
-  //         order === EOrderBy.OrderAtoZ ? faSortAlphaDown : faSortAlphaUp;
-  //     });
-  // }
+  getSort() {
+    return this.store
+      .select(characterSelectors.getOrderCharacter)
+      .subscribe((order) => {
+        this.icon =
+          order === EOrderBy.OrderAtoZ ? faSortAlphaDown : faSortAlphaDownAlt;
+      });
+  }
 
   sort() {
     this.store.dispatch(characterAction.filterByOrder());
+  }
+
+  onSearchToggle() {
+    this.searchActivated = !this.searchActivated;
+    if (!this.searchActivated && this.isFiltered) {
+      this.store.dispatch(characterAction.cancelFilter());
+      this.dispatchGetCharacters();
+    }
   }
 
   ngOnDestroy(): void {
     this.mapSubscription.next();
     this.mapSubscription.complete();
     this.mapSubscription.unsubscribe();
+  }
+
+  get onButtonSearchState() {
+    return this.searchActivated
+      ? { color: 'warn', icon: 'close' }
+      : { color: 'accent', icon: 'search' };
   }
 }

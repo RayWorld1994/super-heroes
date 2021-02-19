@@ -5,13 +5,13 @@
     </button>
     <button
       mat-raised-button
-      color="accent"
-      (click)="searchActivated = !searchActivated"
+      [color]="onButtonSearchState.color"
+      (click)="onSearchToggle()"
     >
-      Search<mat-icon>search</mat-icon>
+      Search<mat-icon>{{onButtonSearchState.icon}}</mat-icon>
     </button>
   </div>
-  <app-filter-character *ngIf="searchActivated"></app-filter-character>
+  <app-filter-character @filter *ngIf="searchActivated"></app-filter-character>
 </div>
 
 <div class="grid-container" #container>

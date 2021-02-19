@@ -20,7 +20,7 @@
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
 
-      <mat-accordion>
+      <mat-accordion >
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title> Advanced Search </mat-panel-title>
@@ -78,14 +78,10 @@
           </div>
         </mat-expansion-panel>
       </mat-accordion>
-      <button
-        class="btn-submit"
-        mat-raised-button
-        type="submit"
-        color="primary"
-      >
-        Filter
-      </button>
+      <div class="btn-wrapper">
+        <button mat-raised-button type="submit" color="primary">Filter</button>
+        <button mat-raised-button type="button" color="warn" (click)="onReset()">Reset</button>
+      </div>
     </form>
   </mat-card-content>
 </mat-card>

@@ -19,6 +19,13 @@ import {
 import { SelectOneOptionValidator } from '../../validators/select-one-option.validator';
 import * as characterActions from 'src/app/modules/core/store/actions/character.action';
 import { FilterCharacter } from 'src/app/modules/core/interfaces/filter.character';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-filter-character',
@@ -65,7 +72,10 @@ export class FilterCharacterComponent implements OnInit {
   }
 
   displayTitle(comic: Comic) {
-    return comic.title;
+    if (comic) {
+      return comic.title;
+    }
+    return '';
   }
 
   onSubmit() {
@@ -74,13 +84,17 @@ export class FilterCharacterComponent implements OnInit {
       this.store.dispatch(
         characterActions.filterCharacters({
           filter: {
-            byComic: (this.byComicControl?.value as Comic).id,
+            byComic: (this.byComicControl?.value as Comic)?.id,
             byName: this.byNameControl?.value,
             byStory: this.byStoryControl?.value,
           },
         })
       );
     }
+  }
+
+  onReset() {
+    this.filterForm.reset();
   }
 
   get byComicControl() {

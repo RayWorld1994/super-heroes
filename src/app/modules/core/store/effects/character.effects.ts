@@ -21,8 +21,9 @@ export class CharacterEffect {
   getCharacters$ = createEffect(() =>
     this.action$.pipe(
       ofType(characterAction.getCharacters),
-      mergeMap(() =>
-        this.characterService.getCharacters().pipe(
+      concatMap(action => of(action).pipe(withLatestFrom(this.store.select(characterSeletors.getOrderCharacter)))),
+      mergeMap(([_, orderBy]) =>
+        this.characterService.getCharacters({orderBy}).pipe(
           map((data) => {
             const ids = data.results.map((character) => character.id);
             return characterAction.getCharactersSuccess({
@@ -180,6 +181,7 @@ export class CharacterEffect {
       )
     )
   );
+
 
   constructor(
     private action$: Actions,

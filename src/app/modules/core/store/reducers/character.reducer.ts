@@ -81,6 +81,12 @@ const _characterReducer = createReducer(
       byComic: filter.byComic,
       byStory: filter.byStory,
     },
+    isFiltered: true,
+  })),
+  on(characterAction.cancelFilter, (state) => ({
+    ...state,
+    filterOption: { byComic: '', byName: '', byStory: '' },
+    isFiltered: false,
   }))
 );
 
