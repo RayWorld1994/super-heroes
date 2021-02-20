@@ -1,7 +1,5 @@
-import { LoadingService } from './../services/loading.service';
-import { ToggleSearchService } from './../../shared/services/toggle-search.service';
-import { ScrollDispatcher, CdkScrollable } from '@angular/cdk/scrolling';
-import { Attribute, Component, ViewChild, ElementRef } from '@angular/core';
+import { ScrollDispatcher } from '@angular/cdk/scrolling';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { delay, map, shareReplay } from 'rxjs/operators';
@@ -9,6 +7,7 @@ import { Option } from '../Interfaces/option.interface';
 import { menuOption } from '../constants/menuOption';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute, Event, Router } from '@angular/router';
+import { LoadingService } from '../services/loading.service';
 
 @Component({
   selector: 'app-navbar',
@@ -34,7 +33,6 @@ export class NavbarComponent {
     private route: ActivatedRoute,
     private router: Router,
     private scrollDispatcher: ScrollDispatcher,
-    private toggleSearchService: ToggleSearchService,
     private loadingService: LoadingService
   ) {}
 
@@ -67,9 +65,5 @@ export class NavbarComponent {
     this.scrollDispatcher
       .getAncestorScrollContainers(this.elementRef)[0]
       .scrollTo({ top: 0, behavior: 'auto' });
-  }
-
-  search() {
-    this.toggleSearchService.click();
   }
 }

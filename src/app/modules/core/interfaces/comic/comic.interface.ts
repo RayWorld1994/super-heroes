@@ -1,14 +1,14 @@
-import { List } from "../character/list.interfaces";
-import { Item } from "../item.interface";
-import { Thumbnail } from "../thumbnail.intarface";
-import { Url } from "../url.interface";
-import { CollectedIssue } from "./collected-issue.interface";
-import { Collection } from "./collection.interface";
-import { IDate } from "./date.interface";
-import { Image } from "./image.interface";
-import { Price } from "./price.interface";
-import { TextObject } from "./text-object.interface";
-import { Variant } from "./variant.interface";
+import { List } from '../character/list.interfaces';
+import { Item } from '../item.interface';
+import { Thumbnail } from '../thumbnail.intarface';
+import { Url } from '../url.interface';
+import { CollectedIssue } from './collected-issue.interface';
+import { Collection } from './collection.interface';
+import { IDate } from './date.interface';
+import { Image } from './image.interface';
+import { Price } from './price.interface';
+import { TextObject } from './text-object.interface';
+import { Variant } from './variant.interface';
 
 export interface Comic {
   id: string;
