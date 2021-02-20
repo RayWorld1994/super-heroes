@@ -15,23 +15,29 @@ import * as characterAction from '../actions/character.action';
 import * as characterSeletors from '../selectors/character.selector';
 import { EMPTY, of } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { result } from 'lodash';
 
 @Injectable()
 export class CharacterEffect {
   getCharacters$ = createEffect(() =>
     this.action$.pipe(
       ofType(characterAction.getCharacters),
-      concatMap(action => of(action).pipe(withLatestFrom(this.store.select(characterSeletors.getOrderCharacter)))),
+      concatMap((action) =>
+        of(action).pipe(
+          withLatestFrom(this.store.select(characterSeletors.getOrderCharacter))
+        )
+      ),
       mergeMap(([_, orderBy]) =>
-        this.characterService.getCharacters({orderBy}).pipe(
+        this.characterService.getCharacters({ orderBy }).pipe(
           map((data) => {
             const ids = data.results.map((character) => character.id);
+            const { results, offset, total, limit } = data;
             return characterAction.getCharactersSuccess({
-              characters: data.results,
+              characters: results,
               scrolling: {
-                offset: data.offset,
-                total: data.total,
-                limit: data.limit,
+                offset,
+                total,
+                limit,
               },
               ids,
             });
@@ -181,7 +187,6 @@ export class CharacterEffect {
       )
     )
   );
-
 
   constructor(
     private action$: Actions,

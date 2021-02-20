@@ -1,0 +1,12 @@
+@import './variables';
+
+@mixin subtitle-bookmark {
+  display: flex;
+  justify-content: center;
+  background-color: $warn-color;
+  color: white;
+  position: sticky;
+  top: 64px;
+  z-index: 4;
+  margin: 0 -20px 10px -20px;
+}

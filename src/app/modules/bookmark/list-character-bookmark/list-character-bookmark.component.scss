@@ -1,0 +1,10 @@
+@import './grid.scss';
+@import './mixin.scss';
+
+.container-list {
+  @include grid-elment;
+}
+
+.subtitle {
+  @include subtitle-bookmark;
+}

@@ -7,7 +7,20 @@
   max-height: 600px;
 }
 
+.bookmark {
+  position: absolute;
+  right: 0;
+  top: 0;
+  .mat-icon {
+    font-size: 40px;
+    margin-right: 10px;
+    font-weight: 100;
+  }
+}
 
+img {
+  cursor: pointer;
+}
 
 .description {
   display: -webkit-box;
@@ -22,5 +35,3 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
-

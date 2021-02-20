@@ -1,27 +1,37 @@
-<a [routerLink]="[element.id]" class="link-character">
-  <mat-card color="primary">
-    <mat-card-header>
-      <mat-card-title [matTooltip]="title" matTooltipClass="tooltip">{{
-        title
-      }}</mat-card-title>
-    </mat-card-header>
-    <img
-      mat-card-image
-      [appThumbnailSize]="size"
-      [srcThumbnail]="element.thumbnail.path"
-      src-fallback="assets/marvel-default.jpg"
-      alt="Photo about marvel"
-    />
-    <mat-card-content>
-      <p
-        class="description"
-        matTooltip="{{
-          element.description ? element.description : 'No description'
-        }}"
-        matTooltipClass="tooltip"
-      >
-        {{ element.description ? element.description : 'No description' }}
-      </p>
-    </mat-card-content>
-  </mat-card>
-</a>
+<!-- <a [routerLink]="[element.id]" class="link-character"> -->
+<mat-card color="primary">
+  <mat-card-header>
+    <mat-card-title [matTooltip]="title" matTooltipClass="tooltip">{{
+      title
+    }}</mat-card-title>
+    <button
+      [color]="iconBookmarkState"
+      mat-icon-button
+      class="bookmark"
+      (click)="addRemoveBookmark()"
+    >
+      <mat-icon *ngIf="!bookmark">turned_in_not</mat-icon>
+      <mat-icon *ngIf="bookmark">turned_in</mat-icon>
+    </button>
+  </mat-card-header>
+  <img
+    mat-card-image
+    [appThumbnailSize]="size"
+    [srcThumbnail]="element.thumbnail.path"
+    src-fallback="assets/marvel-default.jpg"
+    alt="Photo about marvel"
+    (click)="onSelectCharacter()"
+  />
+  <mat-card-content>
+    <p
+      class="description"
+      matTooltip="{{
+        element.description ? element.description : 'No description'
+      }}"
+      matTooltipClass="tooltip"
+    >
+      {{ element.description ? element.description : 'No description' }}
+    </p>
+  </mat-card-content>
+</mat-card>
+<!-- </a> -->

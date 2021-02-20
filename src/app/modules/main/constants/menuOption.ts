@@ -1,7 +1,17 @@
-import { faBook, faCalendar, faFilm, faHistory, faMask, faPencilRuler } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBook,
+  faBookmark,
+  faCalendar,
+  faFilm,
+  faHistory,
+  faMask,
+  faPencilRuler,
+  faStar,
+} from '@fortawesome/free-solid-svg-icons';
 import { Option } from '../Interfaces/option.interface';
 
 export const menuOption: Option[] = [
+  { option: 'Bookmarks', route: '/bookmarks', icon: faStar },
   { option: 'Characters', route: '/characters', icon: faMask },
   { option: 'Comics', route: '/comics', icon: faBook },
   { option: 'Series', route: '/series', icon: faFilm },

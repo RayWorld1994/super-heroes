@@ -85,9 +85,23 @@ const _characterReducer = createReducer(
   })),
   on(characterAction.cancelFilter, (state) => ({
     ...state,
-    filterOption: { byComic: '', byName: '', byStory: '' },
+    filterOption: {
+      ...state.filterOption,
+      byComic: '',
+      byName: '',
+      byStory: '',
+    },
     isFiltered: false,
-  }))
+  })),
+  on(characterAction.addCharacterBookmark, (state, { id }) => ({
+    ...state,
+    bookmarks: [...state.bookmarks, id],
+  })),
+  on(characterAction.removeCharacterBookmark, (state, { id }) => {
+    const bookmarks = [...state.bookmarks];
+    bookmarks.splice(bookmarks.indexOf(id), 1);
+    return { ...state, bookmarks };
+  })
 );
 
 export function characterReducer(

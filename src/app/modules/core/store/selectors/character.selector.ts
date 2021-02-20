@@ -1,6 +1,7 @@
 import { characterAdapter, ICharacterState } from './../state/character.state';
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { EOrderBy } from '../../utils/eorder-by.enum';
+import { Character } from '../../interfaces/character/character.interface';
 
 export const selectFeatureCharacter = createFeatureSelector<ICharacterState>(
   'characterState'
@@ -102,6 +103,17 @@ export const getSearchName = createSelector(
 //     }
 //   }
 // );
+export const getIdsBookmarks = createSelector(
+  selectFeatureCharacter,
+  ({ bookmarks }) => bookmarks
+);
+
+export const getCharactersBookmarks = createSelector(
+  getIdsBookmarks,
+  getCharactersEntities,
+  (ids, entities) => ids.map((id) => entities[id] as Character)
+);
+
 export const getIsFiltered = createSelector(
   selectFeatureCharacter,
   ({ isFiltered }) => isFiltered
@@ -115,7 +127,9 @@ export const getCharacterHashIds = createSelector(
 export const getCharacterOnScreen = createSelector(
   getCharactersEntities,
   getCharacterHashIds,
-  (entities, ids) => {
-    return ids.map((id) => entities[id]);
-  }
+  getIdsBookmarks,
+  (entities, ids) =>
+    ids.map((id) => {
+      return entities[id] as Character;
+    })
 );

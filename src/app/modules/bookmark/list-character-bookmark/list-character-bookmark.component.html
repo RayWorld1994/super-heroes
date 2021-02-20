@@ -1,0 +1,6 @@
+<div class="wrapper">
+  <h1 class="subtitle">Characters</h1>
+  <div class="container-list">
+    <app-card-item *ngFor="let character of characters | async" [element]="character"></app-card-item>
+  </div>
+</div>

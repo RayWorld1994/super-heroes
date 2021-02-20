@@ -14,6 +14,11 @@ const routes: Routes = [
           import('../home/home.module').then((m) => m.HomeModule),
       },
       {
+        path: 'bookmarks',
+        loadChildren: () =>
+          import('../bookmark/bookmark.module').then((m) => m.BookmarkModule),
+      },
+      {
         path: 'characters',
         loadChildren: () =>
           import('../characters/characters.module').then(
