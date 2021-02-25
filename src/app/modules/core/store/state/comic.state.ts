@@ -3,19 +3,31 @@ import { EOrderBy } from './../../utils/eorder-by.enum';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Comic } from '../../interfaces/comic/comic.interface';
 import { FilterComic } from '../../interfaces/filter-comic.interface';
+import { InfiniteScroolling } from '../../interfaces/scrolling.interface';
 
 export interface IComicState extends EntityState<Comic> {
+  comicsListId: number[];
   selectedComicId: number | null;
-  offset: number;
-  orderBy: string;
+  filterOption: FilterComic;
+  bookmarks: number[];
+  scrolling: InfiniteScroolling;
+  isFiltered: boolean;
 }
 
 export const comicAdapter: EntityAdapter<Comic> = createEntityAdapter<Comic>();
 
 const _initialComicState: IComicState = comicAdapter.getInitialState({
   selectedComicId: null,
-  offset: 0,
-  orderBy: EOrderComicBy.issueNumber1to9,
+  comicsListId: [],
+  scrolling: { offset: 0, total: 0, limit: 0 },
+  filterOption: {
+    orderBy: EOrderComicBy.issueNumber1to9,
+    format: '',
+    issueNumber: null,
+    titleStartsWith: '',
+  },
+  isFiltered: false,
+  bookmarks: [],
 });
 
 export const initialComicState = _initialComicState;
