@@ -10,7 +10,7 @@ const _characterReducer = createReducer(
   on(characterAction.getCharacters, (state) => ({
     ...state,
     scrolling: { ...state.scrolling, offset: 0 },
-    filter: {
+    filterOption: {
       ...state.filterOption,
       orderBy: EOrderBy.OrderAtoZ,
       byName: '',
@@ -83,7 +83,7 @@ const _characterReducer = createReducer(
     },
     isFiltered: true,
   })),
-  on(characterAction.cancelFilter, (state) => ({
+  on(characterAction.cancelFilterCharacter, (state) => ({
     ...state,
     filterOption: {
       ...state.filterOption,
