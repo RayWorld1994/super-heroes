@@ -54,11 +54,7 @@ export const filterCharacters = createAction(
   ECharacterActions.getCharactersFiltered,
   props<{ filter: FilterCharacter }>()
 );
-export const filterCharactersSuccess = createAction(
-  ECharacterActions.getCharactersFilteredSuccess,
-  props<{ characters: Character[] }>()
-);
-export const cancelFilter = createAction(
+export const cancelFilterCharacter = createAction(
   ECharacterActions.cancelFilterCharacter
 );
 export const addCharacterBookmark = createAction(
