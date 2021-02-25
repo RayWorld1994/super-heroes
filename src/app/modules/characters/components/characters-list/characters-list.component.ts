@@ -97,7 +97,7 @@ export class CharactersListComponent implements OnInit {
   onSearchToggle() {
     this.searchActivated = !this.searchActivated;
     if (!this.searchActivated && this.isFiltered) {
-      this.store.dispatch(characterAction.cancelFilter());
+      this.store.dispatch(characterAction.cancelFilterCharacter());
       this.dispatchGetCharacters();
     }
   }
