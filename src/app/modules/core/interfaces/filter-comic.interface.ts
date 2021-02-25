@@ -1,6 +1,6 @@
 export interface FilterComic {
-  orderBy: string;
-  byComic: string;
-  byName: string;
-  byStory: string;
+  format: string,
+  titleStartsWith: string,
+  issueNumber: number | null,
+  orderBy: string
 }
