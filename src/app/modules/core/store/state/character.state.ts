@@ -8,7 +8,7 @@ export interface ICharacterState extends EntityState<Character> {
   characterListId: number[];
   selectedCharacterId: number;
   filterOption: FilterCharacter;
-  bookmark: number[];
+  bookmarks: number[];
   scrolling: InfiniteScroolling;
   isFiltered: boolean;
 }
@@ -27,6 +27,6 @@ export const initialCharacterState: ICharacterState = characterAdapter.getInitia
       byStory: '',
     },
     isFiltered: false,
-    bookmark: [],
+    bookmarks: [1011334, 1017100, 1009144, 1010699],
   }
 );
