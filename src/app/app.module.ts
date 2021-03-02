@@ -26,7 +26,10 @@ import { ComicEffects } from './modules/core/store/effects/comic.effects';
       logOnly: environment.production,
     }),
     BrowserAnimationsModule,
-    EffectsModule.forRoot([CharacterEffect, ComicEffects]),
+    EffectsModule.forRoot([
+      CharacterEffect,
+      ComicEffects
+    ]),
   ],
   providers: [],
   bootstrap: [AppComponent],

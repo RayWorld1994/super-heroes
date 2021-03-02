@@ -2,6 +2,7 @@ import { cancelFilterCharacter } from './character.action';
 import { createAction, props } from '@ngrx/store';
 import { Comic } from '../../interfaces/comic/comic.interface';
 import { InfiniteScroolling } from '../../interfaces/scrolling.interface';
+import { FilterComic } from '../../interfaces/filter-comic.interface';
 
 export enum EComicActions {
   GetComics = '[Comic Page] Get Comics',
@@ -11,9 +12,7 @@ export enum EComicActions {
   getMoreComics = '[Comic Page] Get More Comics',
   getMoreComicsSuccess = '[Comic Page] Get More Comics Success',
   getComicsSortedByIssue = '[Comic Page] Get Comic Sorted ',
-  getComicsFilteredByTitle = '[Comic Page] Get Comic Filtered by Title ',
-  getComicsFilteredByFormat = '[Comic Page] Get Comic Sorted Filtered by Format',
-  getComicsFilteredByIssue = '[Comic Page] Get Comic Filtered by Issue ',
+  getComicsFiltered = '[Comic Page] Get Comics Filtered',
   cancelFilterComic = '[Comic Page] Cancel Filter Comics',
   addComicToBookmark = '[Comic Page] Add Comic to Bookmark',
   removeComicToBookmark = '[Comic Page] Add Comic to Bookmark',
@@ -35,22 +34,19 @@ export const comicSelectedSuccess = createAction(
 export const getMoreComics = createAction(EComicActions.getMoreComics);
 export const getMoreComicsSuccess = createAction(
   EComicActions.getMoreComicsSuccess,
-  props<{ comics: Comic[]; offset: number; ids: number }>()
+  props<{ comics: Comic[]; offset: number; ids: number[] }>()
 );
-export const sortByIssueNumber = createAction(
-  EComicActions.getComicsSortedByIssue
+export const sortBy = createAction(
+  EComicActions.getComicsSortedByIssue,
+  props<{ orderBy: string }>()
 );
-export const filterByTitle = createAction(
-  EComicActions.getComicsFilteredByTitle
+export const filterComics = createAction(
+  EComicActions.getComicsFiltered,
+  props<{ filter: FilterComic }>()
 );
-export const filterByFormat = createAction(
-  EComicActions.getComicsFilteredByFormat
-);
-export const filterByIssue = createAction(
-  EComicActions.getComicsFilteredByIssue
-);
+
 export const cancelFilterComic = createAction(EComicActions.cancelFilterComic);
-export const addCharacterBookmark = createAction(
+export const addComicBookmark = createAction(
   EComicActions.addComicToBookmark,
   props<{ id: number }>()
 );

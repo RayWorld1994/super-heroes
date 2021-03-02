@@ -1,3 +1,4 @@
+import { ParametersComicHttp } from './../interfaces/comic/parameterComicHttp.interface';
 import { Comic } from './../interfaces/comic/comic.interface';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -13,8 +14,16 @@ export class ComicRequestService {
 
   constructor(private http: HttpClient) {}
 
-  comicsRequest(orderBy: string): Observable<IApiResponse<Comic[]>> {
-    const options = { params: { orderBy } };
+  comicsRequest(
+    parameters?: ParametersComicHttp
+  ): Observable<IApiResponse<Comic[]>> {
+    const params = parameters
+      ? Object.entries(parameters).reduce(
+          (accu, [key, value]) => (value ? { ...accu, [key]: value } : accu),
+          {}
+        )
+      : {};
+    const options = { params };
     return this.http.get<IApiResponse<Comic[]>>(this._UrlApiComics, options);
   }
 
@@ -22,14 +31,6 @@ export class ComicRequestService {
     titleComic: string
   ): Observable<IApiResponse<Comic[]>> {
     const options = { params: { titleStartsWith: titleComic, limit: '5' } };
-    return this.http.get<IApiResponse<Comic[]>>(this._UrlApiComics, options);
-  }
-
-  MoreComicsRequest(
-    offset: number,
-    orderBy: string
-  ): Observable<IApiResponse<Comic[]>> {
-    const options = { params: { offset: offset.toString(), orderBy } };
     return this.http.get<IApiResponse<Comic[]>>(this._UrlApiComics, options);
   }
 

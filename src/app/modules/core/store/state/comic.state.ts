@@ -21,7 +21,7 @@ const _initialComicState: IComicState = comicAdapter.getInitialState({
   comicsListId: [],
   scrolling: { offset: 0, total: 0, limit: 0 },
   filterOption: {
-    orderBy: EOrderComicBy.issueNumber1to9,
+    orderBy: '',
     format: '',
     issueNumber: null,
     titleStartsWith: '',

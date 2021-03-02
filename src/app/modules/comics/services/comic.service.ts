@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Comic } from '../../core/interfaces/comic/comic.interface';
+import { ParametersComicHttp } from '../../core/interfaces/comic/parameterComicHttp.interface';
 import { Data } from '../../core/interfaces/data.interface';
 import { ComicRequestService } from '../../core/services/comic-request.service';
 
@@ -11,9 +12,9 @@ import { ComicRequestService } from '../../core/services/comic-request.service';
 export class ComicService {
   constructor(private comicService: ComicRequestService) {}
 
-  getcomics(order: string): Observable<Data<Comic[]>> {
+  getcomics(paramater?: ParametersComicHttp): Observable<Data<Comic[]>> {
     return this.comicService
-      .comicsRequest(order)
+      .comicsRequest(paramater)
       .pipe(map((apiResponse) => apiResponse.data));
   }
 
@@ -26,12 +27,6 @@ export class ComicService {
   getcomic(id: number): Observable<Data<Comic[]>> {
     return this.comicService
       .comicRequest(id)
-      .pipe(map((apiResponse) => apiResponse.data));
-  }
-
-  getMorecomics(offset: number, order: string): Observable<Data<Comic[]>> {
-    return this.comicService
-      .MoreComicsRequest(offset, order)
       .pipe(map((apiResponse) => apiResponse.data));
   }
 }

@@ -1,6 +1,7 @@
 import { EOrderComicBy } from './../../utils/e-order-comic-by.enum';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { comicAdapter, IComicState } from '../state/comic.state';
+import { Comic } from '../../interfaces/comic/comic.interface';
 
 export const comicSelectedFeature = createFeatureSelector<IComicState>(
   'comicState'
@@ -41,58 +42,37 @@ export const getlistByComic = createSelector(getCurrentComic, (comic) => {
 });
 export const getOffset = createSelector(
   comicSelectedFeature,
-  (state) => state.offset
+  (state) => state.scrolling.offset
 );
-export const getOrderBy = createSelector(
+export const getFilterOption = createSelector(
   comicSelectedFeature,
-  (state) => state.orderBy
+  ({ filterOption }) => filterOption
 );
-
-export const getOrderByTitle = createSelector(getOrderBy, (orderBy) => {
-  if (
-    orderBy === EOrderComicBy.titleAtoZ ||
-    orderBy === EOrderComicBy.titleZtoA
-  ) {
-    return orderBy;
-  }
-  return EOrderComicBy.titleAtoZ;
-});
-export const getOrderByIssue = createSelector(getOrderBy, (orderBy) => {
-  if (
-    orderBy === EOrderComicBy.issueNumber1to9 ||
-    orderBy === EOrderComicBy.issueNumber9to1
-  ) {
-    return orderBy;
-  }
-  return EOrderComicBy.issueNumber1to9;
-});
-
-export const comicsSort = createSelector(
+export const getOrderComic = createSelector(
+  getFilterOption,
+  ({ orderBy }) => orderBy
+);
+export const getIdsBookmarks = createSelector(
   comicSelectedFeature,
-  getAllComics,
-  (state, comics) => {
-    switch (state.orderBy) {
-      case EOrderComicBy.titleAtoZ:
-        return comics.sort((a, b) =>
-          a.title == b.title ? 0 : a.title > b.title ? 1 : -1
-        );
-      case EOrderComicBy.titleZtoA:
-        return comics.sort((a, b) =>
-          a.title == b.title ? 0 : a.title > b.title ? -1 : 1
-        );
-      case EOrderComicBy.issueNumber1to9:
-        return comics.sort((a, b) => a.issueNumber - b.issueNumber);
-      case EOrderComicBy.issueNumber9to1:
-        return comics.sort((a, b) => b.issueNumber - b.issueNumber);
-      default:
-        return comics;
-    }
+  ({ bookmarks }) => bookmarks
+);
+export const getComicsBookmarks = createSelector(
+  getComicsEntities,
+  getIdsBookmarks,
+  (entities, ids) => {
+    return ids.map((id) => entities[id] as Comic);
   }
 );
-
+export const getIsFiltered = createSelector(
+  comicSelectedFeature,
+  ({ isFiltered }) => isFiltered
+);
+export const getComicHashIds = createSelector(
+  comicSelectedFeature,
+  ({ comicsListId }) => comicsListId
+);
 export const getComicOnScreen = createSelector(
-  comicsSort,
-  getOffset,
-  getOrderBy,
-  (comics, offset) => comics?.slice(0, offset)
+  getComicsEntities,
+  getComicHashIds,
+  (entites, ids) => ids.map((id) => entites[id] as Comic)
 );

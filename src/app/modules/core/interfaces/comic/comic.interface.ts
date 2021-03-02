@@ -11,7 +11,7 @@ import { TextObject } from './text-object.interface';
 import { Variant } from './variant.interface';
 
 export interface Comic {
-  id: string;
+  id: number;
   digitalId: string;
   title: string;
   issueNumber: number;

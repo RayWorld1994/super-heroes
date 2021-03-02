@@ -10,6 +10,7 @@ import {
   concatMap,
   withLatestFrom,
   tap,
+  switchMap,
 } from 'rxjs/operators';
 import { ComicService } from 'src/app/modules/comics/services/comic.service';
 import * as comicActions from '../actions/comic.action';
@@ -19,17 +20,23 @@ import * as comicSelectors from '../selectors/comic.selector';
 export class ComicEffects {
   getComics = createEffect(() =>
     this.action$.pipe(
-      ofType(comicActions.getComics, comicActions.sortByTitle),
+      ofType(comicActions.getComics),
       concatMap((action) =>
         of(action).pipe(
-          withLatestFrom(this.store.select(comicSelectors.getOrderBy))
+          withLatestFrom(this.store.select(comicSelectors.getOrderComic))
         )
       ),
-      mergeMap(([_, order]) =>
-        this.comicService.getcomics(order).pipe(
-          map((data) =>
-            comicActions.getComicsSuccess({ comics: data.results })
-          ),
+      mergeMap(([_, orderBy]) =>
+        this.comicService.getcomics({ orderBy }).pipe(
+          map((data) => {
+            const { results, ...scrolling } = data;
+            const ids = results.map((comic) => comic.id);
+            return comicActions.getComicsSuccess({
+              comics: results,
+              ids,
+              scrolling,
+            });
+          }),
           catchError(() => EMPTY)
         )
       )
@@ -59,21 +66,61 @@ export class ComicEffects {
         of(action).pipe(
           withLatestFrom(
             this.store.select(comicSelectors.getOffset),
-            this.store.select(comicSelectors.getOrderBy)
+            this.store.select(comicSelectors.getFilterOption)
           )
         )
       ),
-      exhaustMap(([_, offset, order]) =>
-        this.comicService.getMorecomics(offset, order).pipe(
-          map((data) => {
-            return comicActions.getMoreComicsSuccess({
-              comics: data.results,
-              offset: +data.offset,
-            });
-          }),
-          catchError(() => EMPTY)
-        )
+      exhaustMap(([_, offset, filterOption]) =>
+        this.comicService
+          .getcomics({
+            offset: offset.toString(),
+            ...{
+              ...filterOption,
+              issueNumber: filterOption.issueNumber?.toString(),
+            },
+          })
+          .pipe(
+            map((data) => {
+              const { results, offset } = data;
+              const ids = results.map((comic) => comic.id);
+              return comicActions.getMoreComicsSuccess({
+                comics: results,
+                ids,
+                offset,
+              });
+            }),
+            catchError(() => EMPTY)
+          )
       )
+    )
+  );
+
+  filterComics$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(comicActions.filterComics),
+      concatMap((action) =>
+        of(action).pipe(
+          withLatestFrom(this.store.select(comicSelectors.getFilterOption))
+        )
+      ),
+      mergeMap(([_, filterOption]) => {
+        return this.comicService
+          .getcomics({
+            ...filterOption,
+            issueNumber: filterOption.issueNumber?.toString(),
+          })
+          .pipe(
+            map((data) => {
+              const { results, ...scrolling } = data;
+              const ids = results.map((comic) => comic.id);
+              return comicActions.getComicsSuccess({
+                comics: results,
+                scrolling,
+                ids,
+              });
+            })
+          );
+      })
     )
   );
 

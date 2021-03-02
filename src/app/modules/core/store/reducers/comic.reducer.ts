@@ -1,17 +1,30 @@
 import { EOrderComicBy } from './../../utils/e-order-comic-by.enum';
-import { createReducer, on } from '@ngrx/store';
-import { comicAdapter, initialComicState } from './../state/comic.state';
+import { Action, createReducer, on } from '@ngrx/store';
+import {
+  comicAdapter,
+  IComicState,
+  initialComicState,
+} from './../state/comic.state';
 import * as comicActions from '../actions/comic.action';
 
-export const comicReducer = createReducer(
+export const _comicReducer = createReducer(
   initialComicState,
   on(comicActions.getComics, (state) => ({
     ...state,
-    offset: 20,
-    orderBy: EOrderComicBy.issueNumber1to9,
+    scrolling: { ...state.scrolling, offset: 0 },
+    filterOption: {
+      ...state.filterOption,
+      format: '',
+      issueNumber: null,
+      orderBy: '',
+    },
   })),
-  on(comicActions.getComicsSuccess, (state, { comics }) => {
-    return comicAdapter.upsertMany(comics, state);
+  on(comicActions.getComicsSuccess, (state, { comics, ids, scrolling }) => {
+    return {
+      ...comicAdapter.upsertMany(comics, state),
+      scrolling: { ...state.scrolling, ...scrolling },
+      comicsListId: ids,
+    };
   }),
   on(comicActions.comicSelected, (state, { id }) => ({
     ...state,
@@ -20,28 +33,64 @@ export const comicReducer = createReducer(
   on(comicActions.comicSelectedSuccess, (state, { comic }) => {
     return comicAdapter.upsertOne(comic, state);
   }),
-  on(comicActions.getMoreComics, (state) => ({
-    ...state,
-    offset: state.offset + 20,
-  })),
-  on(comicActions.getMoreComicsSuccess, (state, { comics, offset }) => {
+  on(comicActions.getMoreComics, (state) => {
+    const offset =
+      state.scrolling.offset + 20 > state.scrolling.total
+        ? state.scrolling.total
+        : state.scrolling.offset + 20;
     return {
-      ...comicAdapter.addMany(comics, state),
-      offset: offset,
+      ...state,
+      scrolling: { ...state.scrolling, offset },
     };
   }),
-  on(comicActions.sortByIssueNumber, (state) => {
-    const orderBy =
-      state.orderBy === EOrderComicBy.issueNumber1to9
-        ? EOrderComicBy.issueNumber9to1
-        : EOrderComicBy.issueNumber1to9;
-    return { ...state, offset: 20, orderBy };
+  on(comicActions.getMoreComicsSuccess, (state, { comics, ids }) => {
+    return {
+      ...comicAdapter.addMany(comics, state),
+      comicsListId: [...state.comicsListId, ...ids],
+    };
   }),
-  on(comicActions.sortByTitle, (state) => {
-    const orderBy =
-      state.orderBy === EOrderComicBy.titleAtoZ
-        ? EOrderComicBy.titleZtoA
-        : EOrderComicBy.titleAtoZ;
-    return { ...state, offset: 20, orderBy };
+  on(comicActions.sortBy, (state, { orderBy }) => {
+    return {
+      ...state,
+      scrolling: { ...state.scrolling, offset: 0 },
+      filterOption: { ...state.filterOption, orderBy },
+    };
+  }),
+  on(comicActions.filterComics, (state, { filter }) => {
+    return {
+      ...state,
+      scrolling: { ...state.scrolling, offset: 0 },
+      filterOption: {
+        ...state.filterOption,
+        ...filter,
+      },
+      isFiltered: true,
+    };
+  }),
+  on(comicActions.cancelFilterComic, (state) => {
+    return {
+      ...state,
+      filterOption: {
+        ...state.filterOption,
+        format: '',
+        issueNumber: null,
+        orderBy: '',
+        titleStartsWith: '',
+      },
+      isFiltered: true,
+    };
+  }),
+  on(comicActions.addComicBookmark, (state, { id }) => ({
+    ...state,
+    bookmarks: [...state.bookmarks, id],
+  })),
+  on(comicActions.removeComicBookmark, (state, { id }) => {
+    const bookmarks = [...state.bookmarks];
+    bookmarks.splice(bookmarks.indexOf(id), 1);
+    return { ...state, bookmarks };
   })
 );
+
+export function comicReducer(state: IComicState | undefined, action: Action) {
+  return _comicReducer(state, action);
+}
