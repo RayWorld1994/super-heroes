@@ -1,37 +1,3 @@
-<!-- <div class="container-character" *ngIf="character$ | async as character">
-  <mat-card class="card-grid">
-    <div class="img-container">
-      <div
-        class="background"
-        [appThumbnailSize]="size"
-        [srcThumbnail]="character?.thumbnail?.path"
-      ></div>
-      <img
-        [appThumbnailSize]="size"
-        [srcThumbnail]="character?.thumbnail?.path"
-        class="img-hero"
-        src-fallback="assets/marvel-default.jpg"
-      />
-    </div>
-
-    <mat-card-header>
-      <mat-card-title>{{ character.name }}</mat-card-title>
-    </mat-card-header>
-
-    <mat-card-content>
-      <div class="description">
-        <p>
-          {{ character.description ? character.description : 'No description' }}
-        </p>
-      </div>
-      <div class="lists">
-        <app-expansion-panel-list
-          [lists]="listsByCharacter"
-        ></app-expansion-panel-list>
-      </div>
-    </mat-card-content>
-  </mat-card>
-</div> -->
 <div class="container-comic" *ngIf="comic$ | async as comic">
   <mat-card>
     <img

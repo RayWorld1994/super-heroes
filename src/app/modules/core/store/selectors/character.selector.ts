@@ -66,48 +66,10 @@ export const getOrderCharacter = createSelector(
   getFilter,
   (filter) => filter.orderBy
 );
-
-export const getSearchName = createSelector(
-  getFilter,
-  (filter) => filter.byName
-);
-
-// export const searchByName = createSelector(
-//   getSearchName,
-//   getAllCharacters,
-//   (name, characters) => {
-//     return name
-//       ? characters.filter((character) =>
-//           character.name.toLowerCase().startsWith(name.toLowerCase())
-//         )
-//       : characters;
-//   }
-// );
-
-// export const charactersSort = createSelector(
-//   selectFeatureCharacter,
-//   searchByName,
-//   (state, characters) => {
-//     switch (state.filterOption.orderBy) {
-//       case EOrderBy.OrderAtoZ:
-//         return characters.sort((a, b) =>
-//           a.name == b.name ? 0 : a.name > b.name ? 1 : -1
-//         );
-//       case EOrderBy.OrderZtoA:
-//         const l = characters.sort((a, b) =>
-//           a.name == b.name ? 0 : a.name < b.name ? 1 : -1
-//         );
-//         return l;
-//       default:
-//         return characters;
-//     }
-//   }
-// );
 export const getIdsBookmarks = createSelector(
   selectFeatureCharacter,
   ({ bookmarks }) => bookmarks
 );
-
 export const getCharactersBookmarks = createSelector(
   getIdsBookmarks,
   getCharactersEntities,
@@ -127,7 +89,6 @@ export const getCharacterHashIds = createSelector(
 export const getCharacterOnScreen = createSelector(
   getCharactersEntities,
   getCharacterHashIds,
-  getIdsBookmarks,
   (entities, ids) =>
     ids.map((id) => {
       return entities[id] as Character;

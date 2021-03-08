@@ -99,31 +99,6 @@ export class CharacterEffect {
     )
   );
 
-  searchCharacterByName$ = createEffect(() =>
-    this.action$.pipe(
-      ofType(characterAction.searchCharacter),
-      concatMap((action) =>
-        this.characterService
-          .getCharacters({ nameStartsWith: action.searchName })
-          .pipe(
-            map((data) => {
-              const ids = data.results.map(({ id }) => id);
-              return characterAction.getCharactersSuccess({
-                characters: data.results,
-                scrolling: {
-                  offset: data.offset,
-                  limit: data.limit,
-                  total: data.total,
-                },
-                ids,
-              });
-            }),
-            catchError(() => EMPTY)
-          )
-      )
-    )
-  );
-
   filterCharacters$ = createEffect(() =>
     this.action$.pipe(
       ofType(characterAction.filterCharacters),

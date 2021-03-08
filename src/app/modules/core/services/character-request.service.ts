@@ -14,14 +14,6 @@ export class CharacterRequestService {
 
   constructor(private http: HttpClient) {}
 
-  // charactersRequest(order: string): Observable<IApiResponse<Character[]>> {
-  //   const option = { params: { orderBy: order } };
-  //   return this.http.get<IApiResponse<Character[]>>(
-  //     this._UrlApiCharacters,
-  //     option
-  //   );
-  // }
-
   charactersRequest(
     parameters?: ParametersHttp
   ): Observable<IApiResponse<Character[]>> {
@@ -41,14 +33,6 @@ export class CharacterRequestService {
   characterRequest(id: number): Observable<IApiResponse<Character[]>> {
     return this.http.get<IApiResponse<Character[]>>(
       `${this._UrlApiCharacters}/${id}`
-    );
-  }
-
-  filterCharacterByNameRequest(byName: string) {
-    const option = { params: { nameStartsWith: byName } };
-    return this.http.get<IApiResponse<Character[]>>(
-      this._UrlApiCharacters,
-      option
     );
   }
 }

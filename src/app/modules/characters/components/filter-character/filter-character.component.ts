@@ -1,12 +1,9 @@
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
-  FormControl,
   FormBuilder,
   FormGroup,
-  Validators,
-  AbstractControl,
 } from '@angular/forms';
 import { ComicService } from 'src/app/modules/comics/services/comic.service';
 import { Comic } from 'src/app/modules/core/interfaces/comic/comic.interface';
@@ -18,15 +15,6 @@ import {
 } from 'rxjs/operators';
 import { SelectOneOptionValidator } from '../../validators/select-one-option.validator';
 import * as characterActions from 'src/app/modules/core/store/actions/character.action';
-import { FilterCharacter } from 'src/app/modules/core/interfaces/filter.character';
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
-
 @Component({
   selector: 'app-filter-character',
   templateUrl: './filter-character.component.html',
@@ -84,7 +72,9 @@ export class FilterCharacterComponent implements OnInit {
       this.store.dispatch(
         characterActions.filterCharacters({
           filter: {
-            byComic: (this.byComicControl?.value as Comic)?.id,
+            byComic: this.byComicControl?.value
+              ? (this.byComicControl.value as Comic).id.toString()
+              : '',
             byName: this.byNameControl?.value,
             byStory: this.byStoryControl?.value,
           },

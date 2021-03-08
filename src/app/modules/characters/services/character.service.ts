@@ -21,16 +21,4 @@ export class CharacterService {
       .characterRequest(id)
       .pipe(map((apiResponse) => apiResponse.data));
   }
-
-  // getMoreCharacters(parameter: ParametersHttp): Observable<Data<Character[]>> {
-  //   return this.characterService
-  //     .MoreCharactersRequest(parameter)
-  //     .pipe(map((apiResponse) => apiResponse.data));
-  // }
-
-  filterCharacterByName(name: string): Observable<Data<Character[]>> {
-    return this.characterService
-      .filterCharacterByNameRequest(name)
-      .pipe(map((apiResponse) => apiResponse.data));
-  }
 }
