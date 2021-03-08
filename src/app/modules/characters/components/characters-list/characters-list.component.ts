@@ -14,6 +14,7 @@ import {
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { zoomIn } from 'src/app/modules/shared/animation/zoomIn';
 
 @Component({
   selector: 'app-characters-list',
@@ -30,6 +31,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
         animate('200ms ease-in-out', style({ height: '0px' })),
       ]),
     ]),
+    zoomIn,
   ],
 })
 export class CharactersListComponent implements OnInit {
