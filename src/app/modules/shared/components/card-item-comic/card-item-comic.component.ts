@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Character } from 'src/app/modules/core/interfaces/character/character.interface';
 import { Comic } from 'src/app/modules/core/interfaces/comic/comic.interface';
 
 import * as comicActions from 'src/app/modules/core/store/actions/comic.action';
@@ -21,7 +20,6 @@ export class CardItemComicComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private store: Store
   ) {}
 
@@ -34,7 +32,7 @@ export class CardItemComicComponent implements OnInit {
   }
 
   onSelectComic() {
-    this.router.navigate([this.comic.id], { relativeTo: this.route });
+    this.router.navigate(['comics', this.comic.id]);
   }
 
   addRemoveBookmark() {
