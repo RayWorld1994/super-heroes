@@ -1,27 +1,29 @@
 import { takeUntil } from 'rxjs/operators';
-import { Subscription, Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { ScrollDispatcher } from '@angular/cdk/scrolling';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Comic } from 'src/app/modules/core/interfaces/comic/comic.interface';
 import * as comicSelectors from 'src/app/modules/core/store/selectors/comic.selector';
 import * as comicActions from 'src/app/modules/core/store/actions/comic.action';
-import {
-  faSortAlphaDown,
-  faSortAlphaUp,
-  IconDefinition,
-} from '@fortawesome/free-solid-svg-icons';
-import { EOrderComicBy } from 'src/app/modules/core/utils/e-order-comic-by.enum';
+import { faSortDown, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { zoomIn } from 'src/app/modules/shared/animation/zoomIn';
 
 @Component({
   selector: 'app-comic-list',
   templateUrl: './comic-list.component.html',
   styleUrls: ['./comic-list.component.scss'],
+  animations: [zoomIn],
 })
 export class ComicListComponent implements OnInit {
-  comics: Comic[] = [];
+  @ViewChild('container', { static: true })
+  containerRef!: ElementRef<HTMLDivElement>;
+
+  comics: Observable<Comic[]> = this.store.select(
+    comicSelectors.getComicOnScreen
+  );
   mapSubscription = new Subject();
-  icon!: IconDefinition;
+  icon: IconDefinition = faSortDown;
 
   constructor(
     private store: Store,
@@ -30,11 +32,8 @@ export class ComicListComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(comicActions.getComics());
-    this.store.select(comicSelectors.getComicOnScreen).subscribe((comics) => {
-      this.comics = comics;
-    });
     this.scrollEvent();
-    this.getSort()
+    // this.getSort()
   }
 
   scrollEvent() {
@@ -51,18 +50,19 @@ export class ComicListComponent implements OnInit {
       });
   }
 
-  sort() {
-    this.store.dispatch(comicActions.sortByTitle());
-  }
+  // sort() {
+  //   console.log(this.sortControl.value);
+  //   this.store.dispatch(comicActions.sortByTitle());
+  // }
 
-  getSort() {
-    return this.store
-      .select(comicSelectors.getOrderByTitle)
-      .subscribe((order) => {
-        this.icon =
-          order === EOrderComicBy.titleAtoZ ? faSortAlphaDown : faSortAlphaUp;
-      });
-  }
+  // getSort() {
+  //   return this.store
+  //     .select(comicSelectors.getOrderByTitle)
+  //     .subscribe((order) => {
+  //       this.icon =
+  //         order === EOrderComicBy.titleAtoZ ? faSortAlphaDown : faSortAlphaUp;
+  //     });
+  // }
 
   ngOnDestroy(): void {
     this.mapSubscription.next();
