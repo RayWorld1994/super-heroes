@@ -16,7 +16,7 @@ export const _comicReducer = createReducer(
       ...state.filterOption,
       format: '',
       issueNumber: null,
-      orderBy: '',
+      orderBy: EOrderComicBy.titleAtoZ,
     },
   })),
   on(comicActions.getComicsSuccess, (state, { comics, ids, scrolling }) => {
@@ -43,19 +43,20 @@ export const _comicReducer = createReducer(
       scrolling: { ...state.scrolling, offset },
     };
   }),
-  on(comicActions.getMoreComicsSuccess, (state, { comics, ids }) => {
+  on(comicActions.getMoreComicsSuccess, (state, { comics, ids, offset }) => {
     return {
       ...comicAdapter.addMany(comics, state),
       comicsListId: [...state.comicsListId, ...ids],
+      scrolling: { ...state.scrolling, offset },
     };
   }),
-  on(comicActions.sortBy, (state, { orderBy }) => {
-    return {
-      ...state,
-      scrolling: { ...state.scrolling, offset: 0 },
-      filterOption: { ...state.filterOption, orderBy },
-    };
-  }),
+  // on(comicActions.sortBy, (state, { orderBy }) => {
+  //   return {
+  //     ...state,
+  //     scrolling: { ...state.scrolling, offset: 0 },
+  //     filterOption: { ...state.filterOption, orderBy },
+  //   };
+  // }),
   on(comicActions.filterComics, (state, { filter }) => {
     return {
       ...state,
@@ -74,16 +75,18 @@ export const _comicReducer = createReducer(
         ...state.filterOption,
         format: '',
         issueNumber: null,
-        orderBy: '',
+        orderBy: EOrderComicBy.titleAtoZ,
         titleStartsWith: '',
       },
-      isFiltered: true,
+      isFiltered: false,
     };
   }),
-  on(comicActions.addComicBookmark, (state, { id }) => ({
-    ...state,
-    bookmarks: [...state.bookmarks, id],
-  })),
+  on(comicActions.addComicBookmark, (state, { id }) => {
+    return {
+      ...state,
+      bookmarks: [...state.bookmarks, id],
+    };
+  }),
   on(comicActions.removeComicBookmark, (state, { id }) => {
     const bookmarks = [...state.bookmarks];
     bookmarks.splice(bookmarks.indexOf(id), 1);

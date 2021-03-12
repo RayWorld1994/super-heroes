@@ -1,5 +1,4 @@
 import { EOrderComicBy } from './../../utils/e-order-comic-by.enum';
-import { EOrderBy } from './../../utils/eorder-by.enum';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Comic } from '../../interfaces/comic/comic.interface';
 import { FilterComic } from '../../interfaces/filter-comic.interface';
@@ -21,7 +20,7 @@ const _initialComicState: IComicState = comicAdapter.getInitialState({
   comicsListId: [],
   scrolling: { offset: 0, total: 0, limit: 0 },
   filterOption: {
-    orderBy: '',
+    orderBy: EOrderComicBy.titleAtoZ,
     format: '',
     issueNumber: null,
     titleStartsWith: '',
