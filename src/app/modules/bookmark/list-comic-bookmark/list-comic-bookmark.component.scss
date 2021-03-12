@@ -1,0 +1,14 @@
+@import './grid.scss';
+@import './mixin.scss';
+
+.container-list {
+  @include grid-elment;
+}
+
+.subtitle {
+  @include subtitle-bookmark;
+}
+
+.subtitle:first-child {
+  margin-top: -20px;
+}
