@@ -13,7 +13,7 @@ import { ESizeThumbnail } from '../../utils/size-thumbnail.enum';
   styleUrls: ['./card-item.component.scss'],
 })
 export class CardItemComponent implements OnInit {
-  @Input() element!: Character | Comic;
+  @Input() element!: Character;
   title!: string;
   bookmark!: boolean;
 
@@ -26,9 +26,6 @@ export class CardItemComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    'name' in this.element
-      ? (this.title = this.element.name)
-      : (this.title = this.element.title);
     this.store.select(characterSelectors.getIdsBookmarks).subscribe((ids) => {
       this.bookmark = ids.some((id) => this.element.id === id);
     });
@@ -51,9 +48,18 @@ export class CardItemComponent implements OnInit {
   }
 
   get iconBookmarkState() {
-    if (this.bookmark) {
-      return 'accent';
-    }
-    return null;
+    return this.bookmark ? 'accent' : null;
+  }
+
+  bookmarkComic(){
+    this.bookmark
+      ? this.store.dispatch(
+          characterAction.removeCharacterBookmark({
+            id: Number(this.element.id),
+          })
+        )
+      : this.store.dispatch(
+          characterAction.addCharacterBookmark({ id: Number(this.element.id) })
+        );
   }
 }
