@@ -1,0 +1,56 @@
+:host {
+  display: block;
+  overflow: hidden;
+}
+
+.input-comic {
+  width: 100%;
+}
+
+.wrapper-input {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  .mat-form-field {
+    flex: 400px;
+  }
+}
+
+.mat-card {
+  overflow: hidden;
+  height: fit-content;
+}
+
+.btn-wrapper {
+  display: flex;
+  margin-top: 10px;
+  gap: 10px;
+
+  button:nth-child(2) {
+    margin-left: auto;
+  }
+}
+
+::ng-deep .mat-form-field-infix {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+::ng-deep mat-accordion mat-expansion-panel {
+  mat-expansion-panel-header {
+    height: 40px; // height may be different for you
+  }
+  .mat-expansion-panel-content {
+    height: 0;
+  }
+  &.mat-expanded {
+    mat-expansion-panel-header {
+      height: 64px; // height may be different for you
+    }
+    .mat-expansion-panel-content {
+      height: auto;
+    }
+  }
+}
