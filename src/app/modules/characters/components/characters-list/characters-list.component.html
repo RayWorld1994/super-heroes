@@ -17,6 +17,7 @@
   ></app-character-item> -->
   <app-card-item *ngFor="let characterItem of characters | async" [element]="characterItem"></app-card-item>
 </div>
-<button class="button-toUp" mat-mini-fab color="warn" (click)="upToTop()">
+<!-- <button class="button-toUp" mat-mini-fab color="warn" (click)="upToTop()">
   <mat-icon>keyboard_arrow_up</mat-icon>
-</button>
+</button> -->
+<app-scroll-to-top [elementRef]="containerRef"></app-scroll-to-top>

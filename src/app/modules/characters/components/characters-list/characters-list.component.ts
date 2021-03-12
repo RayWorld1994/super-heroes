@@ -15,27 +15,17 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { zoomIn } from 'src/app/modules/shared/animation/zoomIn';
+import { SlideInOut } from 'src/app/modules/shared/animation/slideInOut';
 
 @Component({
   selector: 'app-characters-list',
   templateUrl: './characters-list.component.html',
   styleUrls: ['./characters-list.component.scss'],
-  animations: [
-    trigger('filter', [
-      transition(':enter', [
-        style({ height: 0 }),
-        animate('200ms ease-out', style({ height: '*' })),
-      ]),
-      transition(':leave', [
-        style({ height: '*' }),
-        animate('200ms ease-in-out', style({ height: '0px' })),
-      ]),
-    ]),
-    zoomIn,
-  ],
+  animations: [SlideInOut, zoomIn],
 })
 export class CharactersListComponent implements OnInit {
-  @ViewChild('container') divContainer!: ElementRef<HTMLDivElement>;
+  @ViewChild('container', { static: true })
+  containerRef!: ElementRef<HTMLDivElement>;
   characters!: Observable<Character[]>;
   mapSubscription = new Subject();
   icon!: IconDefinition;
@@ -77,11 +67,11 @@ export class CharactersListComponent implements OnInit {
       });
   }
 
-  upToTop() {
-    this.scrollDispatcher
-      .getAncestorScrollContainers(this.divContainer)[0]
-      .scrollTo({ top: 0, behavior: 'smooth' });
-  }
+  // upToTop() {
+  //   this.scrollDispatcher
+  //     .getAncestorScrollContainers(this.divContainer)[0]
+  //     .scrollTo({ top: 0, behavior: 'smooth' });
+  // }
 
   getSort() {
     return this.store
