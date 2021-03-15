@@ -1,4 +1,4 @@
-export interface ParametersComicHttp {
+export interface ParametersHttp {
   offset?: string;
   orderBy?: string;
   titleStartsWith?: string;

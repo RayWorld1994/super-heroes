@@ -1,10 +1,10 @@
-import { ParametersComicHttp } from './../interfaces/comic/parameterComicHttp.interface';
 import { Comic } from './../interfaces/comic/comic.interface';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { IApiResponse } from '../interfaces/IApiResponse.interface';
 import { Observable } from 'rxjs';
+import { ParametersHttp } from '../interfaces/parametersHttp.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ export class ComicRequestService {
   constructor(private http: HttpClient) {}
 
   comicsRequest(
-    parameters?: ParametersComicHttp
+    parameters?: ParametersHttp
   ): Observable<IApiResponse<Comic[]>> {
     const params = parameters
       ? Object.entries(parameters).reduce(
