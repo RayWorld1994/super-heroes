@@ -17,7 +17,7 @@ import { SlideInOut } from 'src/app/modules/shared/animation/slideInOut';
   selector: 'app-sort-story',
   templateUrl: './sort-story.component.html',
   styleUrls: ['./sort-story.component.scss'],
-  animations: [SlideInOut]
+  animations: [SlideInOut],
 })
 export class SortStoryComponent implements OnInit {
   faSortAmountDown = faSortAmountDown;
@@ -61,7 +61,6 @@ export class SortStoryComponent implements OnInit {
       this.store.dispatch(storyActions.cancelFilterStory());
       this.store.dispatch(storyActions.getStories());
     }
-    console.log(this.isFiltered);
   }
 
   getIsFilter() {

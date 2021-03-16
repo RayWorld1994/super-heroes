@@ -9,8 +9,6 @@ import {
   catchError,
   concatMap,
   withLatestFrom,
-  tap,
-  switchMap,
 } from 'rxjs/operators';
 import { ComicService } from 'src/app/modules/comics/services/comic.service';
 import * as comicActions from '../actions/comic.action';

@@ -24,8 +24,6 @@ export class CardItemStoryComponent implements OnInit {
     this.store.select(storySelectors.getIdsBookmarks).subscribe((ids) => {
       this.bookmark = ids.some((id) => this.story.id === id);
     });
-
-    console.log(this.bookmark);
   }
 
   onSelectComic() {

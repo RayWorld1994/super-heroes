@@ -8,14 +8,12 @@ import {
   exhaustMap,
   concatMap,
   withLatestFrom,
-  tap,
   switchMap,
 } from 'rxjs/operators';
 import * as characterAction from '../actions/character.action';
 import * as characterSeletors from '../selectors/character.selector';
 import { EMPTY, of } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { result } from 'lodash';
 
 @Injectable()
 export class CharacterEffect {
@@ -145,7 +143,6 @@ export class CharacterEffect {
             comics: filter.byComic,
           })
           .pipe(
-            tap((data) => console.log(data)),
             map((data) => {
               const ids = data.results.map(({ id }) => id);
               return characterAction.getCharactersSuccess({
