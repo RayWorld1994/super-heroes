@@ -33,7 +33,6 @@ export class ComicListComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(comicActions.getComics());
     this.scrollEvent();
-    // this.getSort()
   }
 
   scrollEvent() {
@@ -49,20 +48,6 @@ export class ComicListComponent implements OnInit {
         }
       });
   }
-
-  // sort() {
-  //   console.log(this.sortControl.value);
-  //   this.store.dispatch(comicActions.sortByTitle());
-  // }
-
-  // getSort() {
-  //   return this.store
-  //     .select(comicSelectors.getOrderByTitle)
-  //     .subscribe((order) => {
-  //       this.icon =
-  //         order === EOrderComicBy.titleAtoZ ? faSortAlphaDown : faSortAlphaUp;
-  //     });
-  // }
 
   ngOnDestroy(): void {
     this.mapSubscription.next();

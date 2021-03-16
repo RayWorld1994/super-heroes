@@ -50,13 +50,6 @@ export const _comicReducer = createReducer(
       scrolling: { ...state.scrolling, offset },
     };
   }),
-  // on(comicActions.sortBy, (state, { orderBy }) => {
-  //   return {
-  //     ...state,
-  //     scrolling: { ...state.scrolling, offset: 0 },
-  //     filterOption: { ...state.filterOption, orderBy },
-  //   };
-  // }),
   on(comicActions.filterComics, (state, { filter }) => {
     return {
       ...state,

@@ -10,10 +10,8 @@ import { takeUntil } from 'rxjs/operators';
 import {
   faSortAlphaDown,
   faSortAlphaDownAlt,
-  faSortAlphaUp,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
-import { trigger, transition, style, animate } from '@angular/animations';
 import { zoomIn } from 'src/app/modules/shared/animation/zoomIn';
 import { SlideInOut } from 'src/app/modules/shared/animation/slideInOut';
 
@@ -66,12 +64,6 @@ export class CharactersListComponent implements OnInit {
         }
       });
   }
-
-  // upToTop() {
-  //   this.scrollDispatcher
-  //     .getAncestorScrollContainers(this.divContainer)[0]
-  //     .scrollTo({ top: 0, behavior: 'smooth' });
-  // }
 
   getSort() {
     return this.store

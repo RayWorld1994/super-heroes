@@ -27,13 +27,6 @@ export class StoryRequestService {
     return this.http.get<IApiResponse<Story[]>>(this._UrlApiStories, options);
   }
 
-  // storiesAutoCompleteRequest(
-  //   titleStory: string
-  // ): Observable<IApiResponse<Story[]>> {
-  //   const options = { params: { titleStartsWith: titleStory, limit: '5' } };
-  //   return this.http.get<IApiResponse<Story[]>>(this._UrlApiStories, options);
-  // }
-
   storyRequest(id: number): Observable<IApiResponse<Story[]>> {
     return this.http.get<IApiResponse<Story[]>>(`${this._UrlApiStories}/${id}`);
   }

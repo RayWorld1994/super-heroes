@@ -18,12 +18,6 @@ export class StoryService {
       .pipe(map((apiResponse) => apiResponse.data));
   }
 
-  // storiesAutoComplete(storyTitle: string): Observable<Story[]> {
-  //   return this.storyService
-  //     .storiesAutoCompleteRequest(storyTitle)
-  //     .pipe(map((apiResponse) => apiResponse.data.results));
-  // }
-
   getstory(id: number): Observable<Data<Story[]>> {
     return this.storyService
       .storyRequest(id)

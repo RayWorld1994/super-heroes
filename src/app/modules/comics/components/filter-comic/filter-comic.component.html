@@ -4,7 +4,12 @@
       <mat-form-field class="input-comic">
         <mat-label>Search Comic</mat-label>
         <input matInput type="search" formControlName="titleStartsWith" />
-        <button type="button" mat-icon-button matSuffix (click)="cleanInputTitle()">
+        <button
+          type="button"
+          mat-icon-button
+          matSuffix
+          (click)="cleanInputTitle()"
+        >
           <mat-icon>close</mat-icon>
         </button>
         <mat-icon matSuffix>search</mat-icon>
@@ -17,56 +22,50 @@
           </mat-expansion-panel-header>
 
           <div class="wrapper-input">
-
             <mat-form-field appearance="fill" aria-label="Sort Comic">
               <mat-label>Filter Comic by Format</mat-label>
-              <!-- <mat-select-trigger>
-                <button type="button" mat-icon-button (click)="cleanInputStory()">
-                  <mat-icon>close</mat-icon>
-                </button>
-              </mat-select-trigger> -->
 
               <mat-select formControlName="format">
-                <mat-option [value]="format" *ngFor="let format of formatsComic">{{format}}</mat-option>
+                <mat-option
+                  [value]="format"
+                  *ngFor="let format of formatsComic"
+                  >{{ format }}</mat-option
+                >
               </mat-select>
             </mat-form-field>
 
-            <!-- <input matInput type="search" formControlName="byStory" />
-            <button type="button" mat-icon-button matSuffix (click)="cleanInputStory()">
-              <mat-icon>close</mat-icon>
-            </button>
-            <mat-icon matSuffix>filter_alt</mat-icon> -->
-
-            <!-- <mat-form-field>
-              <mat-label>Filter character by Comic</mat-label>
-              <input #comicI type="text" placeholder="Pick one" matInput formControlName="byComic"
-                [matAutocomplete]="auto" />
-              <button type="button" mat-icon-button matSuffix (click)="cleanInputComic()">
-                <mat-icon>close</mat-icon>
-              </button>
-              <mat-icon matSuffix>filter_alt</mat-icon>
-              <mat-error *ngIf="byComicControl?.hasError('optionNoSelected')">Please select one comic</mat-error>
-              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayTitle">
-                <mat-option *ngFor="let comic of comicList | async" [value]="comic">
-                  {{ comic.title }}
-                </mat-option>
-              </mat-autocomplete>
-            </mat-form-field> -->
-
             <mat-form-field appearance="fill">
               <mat-label>Filter by Issue Number</mat-label>
-              <input type="number" matInput formControlName="issueNumber" placeholder="Put a number">
-              <button type="button" mat-icon-button matSuffix (click)="cleanInputIssueNumber()">
+              <input
+                type="number"
+                matInput
+                formControlName="issueNumber"
+                placeholder="Put a number"
+              />
+              <button
+                type="button"
+                mat-icon-button
+                matSuffix
+                (click)="cleanInputIssueNumber()"
+              >
                 <mat-icon>close</mat-icon>
               </button>
             </mat-form-field>
-
           </div>
         </mat-expansion-panel>
       </mat-accordion>
       <div class="btn-wrapper">
-        <button mat-raised-button type="submit" color="primary">Filter<mat-icon>search</mat-icon></button>
-        <button mat-raised-button type="button" color="warn" (click)="onReset()">Reset</button>
+        <button mat-raised-button type="submit" color="primary">
+          Filter<mat-icon>search</mat-icon>
+        </button>
+        <button
+          mat-raised-button
+          type="button"
+          color="warn"
+          (click)="onReset()"
+        >
+          Reset
+        </button>
       </div>
     </form>
   </mat-card-content>

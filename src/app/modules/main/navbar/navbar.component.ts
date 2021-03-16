@@ -38,19 +38,9 @@ export class NavbarComponent {
 
   ngOnInit(): void {
     this.navOption = [...menuOption];
-
-    // this.route.url.subscribe((url) => {
-    //   console.log(url);
-    // });
-
-    // this.router.events.subscribe((event: Event) => {
-    //   this.title = event.url
-    // });
   }
 
   ngAfterViewInit(): void {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
     this.isLoading = this.loadingService.isLoading.pipe(delay(0));
   }
 

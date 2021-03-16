@@ -3,21 +3,21 @@
     <button mat-raised-button color="accent" (click)="sort()">
       Order <fa-icon [icon]="icon"></fa-icon>
     </button>
-    <button mat-raised-button [color]="onButtonSearchState.color" (click)="onSearchToggle()">
-      Filter <mat-icon>{{onButtonSearchState.icon}}</mat-icon>
+    <button
+      mat-raised-button
+      [color]="onButtonSearchState.color"
+      (click)="onSearchToggle()"
+    >
+      Filter <mat-icon>{{ onButtonSearchState.icon }}</mat-icon>
     </button>
   </div>
   <app-filter-character @filter *ngIf="searchActivated"></app-filter-character>
 </div>
 
 <div class="grid-container" #container [@list]="(characters | async)?.length">
-  <!-- <app-character-item
-    *ngFor="let characterItem of characters"
-    [character]="characterItem"
-  ></app-character-item> -->
-  <app-card-item *ngFor="let characterItem of characters | async" [element]="characterItem"></app-card-item>
+  <app-card-item
+    *ngFor="let characterItem of characters | async"
+    [element]="characterItem"
+  ></app-card-item>
 </div>
-<!-- <button class="button-toUp" mat-mini-fab color="warn" (click)="upToTop()">
-  <mat-icon>keyboard_arrow_up</mat-icon>
-</button> -->
 <app-scroll-to-top [elementRef]="containerRef"></app-scroll-to-top>

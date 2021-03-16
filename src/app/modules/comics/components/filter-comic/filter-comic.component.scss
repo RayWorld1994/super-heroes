@@ -39,14 +39,14 @@
 
 ::ng-deep mat-accordion mat-expansion-panel {
   mat-expansion-panel-header {
-    height: 40px; // height may be different for you
+    height: 40px;
   }
   .mat-expansion-panel-content {
     height: 0;
   }
   &.mat-expanded {
     mat-expansion-panel-header {
-      height: 64px; // height may be different for you
+      height: 64px;
     }
     .mat-expansion-panel-content {
       height: auto;
