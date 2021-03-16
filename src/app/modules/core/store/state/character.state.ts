@@ -27,6 +27,6 @@ export const initialCharacterState: ICharacterState = characterAdapter.getInitia
       byStory: '',
     },
     isFiltered: false,
-    bookmarks: [1011334, 1017100, 1009144, 1010699],
+    bookmarks: [],
   }
 );
