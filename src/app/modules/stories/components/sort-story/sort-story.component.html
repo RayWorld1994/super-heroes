@@ -1,0 +1,28 @@
+<div class="sort">
+  <mat-form-field appearance="legacy" aria-label="Sort Comic">
+    <mat-label>Order By <mat-icon>sort</mat-icon>
+    </mat-label>
+
+    <mat-select [formControl]="sortControl">
+      <mat-option value="modified">Date (oldest to newest)
+        <fa-icon [icon]="faSortAmountDown"></fa-icon>
+      </mat-option>
+      <mat-option value="-modified">Date (newest to oldest) <fa-icon [icon]="faSortAmountDownAlt"></fa-icon>
+      </mat-option>
+      <mat-option value="id">ID (lower to higher) <fa-icon [icon]="faSortNumericDown"></fa-icon>
+      </mat-option>
+      <mat-option value="-id">ID (higher to lower) <fa-icon [icon]="faSortNumericDownAlt"></fa-icon>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+
+
+<div class="btn-filter">
+  <button mat-raised-button [color]="buttonFilterState.color" (click)="toggleFilter()">Filter <mat-icon>
+      {{buttonFilterState.icon}}</mat-icon>
+  </button>
+</div>
+
+<app-filter-story class="filter" @filter *ngIf="filterActivated"></app-filter-story>

@@ -6,14 +6,15 @@ import { ListCharacterBookmarkComponent } from './list-character-bookmark/list-c
 import { ListComicBookmarkComponent } from './list-comic-bookmark/list-comic-bookmark.component';
 import { SharedModule } from '../shared/shared.module';
 import { BookmarkLayoutComponent } from './bookmark-layout/bookmark-layout.component';
-
+import { ListStoryBookmarkComponent } from './list-story-bookmark/list-story-bookmark.component';
 
 @NgModule({
-  declarations: [ListCharacterBookmarkComponent, ListComicBookmarkComponent, BookmarkLayoutComponent],
-  imports: [
-    CommonModule,
-    BookmarkRoutingModule,
-    SharedModule
-  ]
+  declarations: [
+    ListCharacterBookmarkComponent,
+    ListComicBookmarkComponent,
+    BookmarkLayoutComponent,
+    ListStoryBookmarkComponent,
+  ],
+  imports: [CommonModule, BookmarkRoutingModule, SharedModule],
 })
-export class BookmarkModule { }
+export class BookmarkModule {}

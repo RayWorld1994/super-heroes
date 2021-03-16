@@ -1,0 +1,5 @@
+@import './grid.scss';
+
+.grid-container {
+  @include grid-elment();
+}

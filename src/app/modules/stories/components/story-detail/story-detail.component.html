@@ -1,0 +1,40 @@
+<div class="container-story" *ngIf="story$ | async as story">
+  <mat-card>
+    <img mat-card-image [appThumbnailSize]="size" [srcThumbnail]="story.thumbnail?.path" class="img-hero"
+      src-fallback="assets/marvel-default.jpg" />
+
+    <mat-card-header>
+      <mat-card-title>{{ story.title }}</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="description">
+        <p>{{ story.description }}</p>
+      </div>
+      <div class="character-list" *ngIf="story.characters.items.length > 0">
+        <h3 class="sub-title">Characters</h3>
+        <mat-list>
+          <mat-list-item *ngFor="let character of story.characters.items">{{
+            character.name
+            }}</mat-list-item>
+        </mat-list>
+      </div>
+      <div class="creators-list" *ngIf="story.creators.items.length > 0">
+        <h3 class="sub-title">Creators</h3>
+        <mat-list>
+          <mat-list-item *ngFor="let creator of story.creators.items">{{
+            creator.name
+            }}</mat-list-item>
+        </mat-list>
+      </div>
+      <div class="creators-list" *ngIf="story.comics.items.length > 0">
+        <h3 class="sub-title">Comics</h3>
+        <mat-list>
+          <mat-list-item *ngFor="let story of story.comics.items">{{
+            story.name
+            }}</mat-list-item>
+        </mat-list>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

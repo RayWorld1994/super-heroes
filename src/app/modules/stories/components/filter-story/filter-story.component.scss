@@ -1,0 +1,45 @@
+:host {
+  display: block;
+}
+
+.input-date {
+  width: 100%;
+}
+
+.mat-card {
+  overflow: hidden;
+  height: 100%;
+}
+
+.btn-wrapper {
+  display: flex;
+  margin-top: 10px;
+  gap: 10px;
+
+  button:nth-child(2) {
+    margin-left: auto;
+  }
+}
+
+::ng-deep .mat-form-field-infix {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+::ng-deep mat-accordion mat-expansion-panel {
+  mat-expansion-panel-header {
+    height: 40px;
+  }
+  .mat-expansion-panel-content {
+    height: 0;
+  }
+  &.mat-expanded {
+    mat-expansion-panel-header {
+      height: 64px;
+    }
+    .mat-expansion-panel-content {
+      height: auto;
+    }
+  }
+}

@@ -1,0 +1,6 @@
+<app-sort-story></app-sort-story>
+
+<div class="grid-container" #container [@list]="(stories | async)?.length">
+  <app-card-item-story *ngFor="let storyItem of stories | async" [story]="storyItem"></app-card-item-story>
+</div>
+<app-scroll-to-top [elementRef]="containerRef"></app-scroll-to-top>

@@ -18,6 +18,7 @@ import { CardItemComponent } from './components/card-item/card-item.component';
 import { ExpansionPanelListComponent } from './components/expansion-panel-list/expansion-panel-list.component';
 import { ListInfoComponent } from './components/list-info/list-info.component';
 import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.component';
+import { CardItemStoryComponent } from './components/card-item-story/card-item-story.component';
 
 const declarations = [
   ThumbnailSizeDirective,
@@ -25,7 +26,8 @@ const declarations = [
   ExpansionPanelListComponent,
   ListInfoComponent,
   ScrollToTopComponent,
-  CardItemComicComponent
+  CardItemComicComponent,
+  CardItemStoryComponent,
 ];
 
 const AngularMaterial = [

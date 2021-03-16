@@ -1,0 +1,20 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title [matTooltip]="story.title" matTooltipClass="tooltip">{{
+      story.title
+      }}</mat-card-title>
+    <button [color]="iconBookmarkState" mat-icon-button class="bookmark" (click)="addRemoveBookmark()">
+      <mat-icon *ngIf="!bookmark">turned_in_not</mat-icon>
+      <mat-icon *ngIf="bookmark">turned_in</mat-icon>
+    </button>
+  </mat-card-header>
+  <img mat-card-image [appThumbnailSize]="size" [srcThumbnail]="story.thumbnail?.path"
+    src-fallback="assets/marvel-default.jpg" alt="Photo about marvel" (click)="onSelectComic()" />
+  <mat-card-content>
+    <p class="description" matTooltip="{{
+      story.description ? story.description : 'No description'
+    }}" matTooltipClass="tooltip">
+      {{ story.description ? story.description : 'No description' }}
+    </p>
+  </mat-card-content>
+</mat-card>

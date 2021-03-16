@@ -1,0 +1,15 @@
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
+      <mat-form-field class="input-date">
+        <mat-label>Select a date</mat-label>
+        <input matInput type="date" formControlName="modifiedSince">
+      </mat-form-field>
+
+      <div class="btn-wrapper">
+        <button mat-raised-button type="submit" color="primary">Filter<mat-icon>search</mat-icon></button>
+        <button mat-raised-button type="button" color="warn" (click)="onReset()">Reset</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

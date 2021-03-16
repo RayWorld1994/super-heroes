@@ -1,0 +1,6 @@
+<div *ngIf="(stories|async)?.length">
+  <h1 class="subtitle">Stories</h1>
+  <div class="container-list">
+    <app-card-item-story *ngFor="let storyItem of stories | async" [story]="storyItem"></app-card-item-story>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+.container-story {
+  display: flex;
+  justify-content: center;
+
+}
+
+.mat-card {
+  max-width: 800px;
+  flex-grow: 1;
+}
+
+.sub-title {
+  margin: 0;
+  font-weight: bold;
+}
