@@ -8,7 +8,7 @@ import { storyReducer } from './story.reducer';
 export const reducers: ActionReducerMap<IAppState> = {
   characterState: characterReducer,
   comicState: comicReducer,
-  StoryState: storyReducer,
+  storyState: storyReducer,
 };
 
 export const metaReducers: MetaReducer<any>[] = [storageMetaReducer];
