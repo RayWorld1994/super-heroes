@@ -1,6 +1,5 @@
 :host {
   display: block;
-  overflow: hidden;
 }
 
 .input-comic {
@@ -19,7 +18,7 @@
 
 .mat-card {
   overflow: hidden;
-  height: fit-content;
+  height: 100%;
 }
 
 .btn-wrapper {
