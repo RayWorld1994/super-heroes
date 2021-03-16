@@ -4,13 +4,13 @@ import * as fromStory from './story.state';
 export interface IAppState {
   characterState: fromCharacter.ICharacterState;
   comicState: fromComic.IComicState;
-  StoryState: fromStory.IStoryState;
+  storyState: fromStory.IStoryState;
 }
 
 const _initialAppState: IAppState = {
   characterState: fromCharacter.initialCharacterState,
   comicState: fromComic.initialComicState,
-  StoryState: fromStory.initialStoryState,
+  storyState: fromStory.initialStoryState,
 };
 
 export const initialAppState: IAppState = _initialAppState;
