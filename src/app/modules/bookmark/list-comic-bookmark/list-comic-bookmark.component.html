@@ -1,4 +1,6 @@
-<h1 class="subtitle">Comics</h1>
-<div class="container-list">
-  <app-card-item-comic *ngFor="let comicItem of comics | async" [comic]="comicItem"></app-card-item-comic>
+<div *ngIf="(comics | async)?.length">
+  <h1 class="subtitle">Comics</h1>
+  <div class="container-list">
+    <app-card-item-comic *ngFor="let comicItem of comics | async" [comic]="comicItem"></app-card-item-comic>
+  </div>
 </div>
