@@ -1,6 +1,6 @@
 import { CharacterService } from './../../../characters/services/character.service';
 import { Injectable } from '@angular/core';
-import { act, Actions, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
   mergeMap,
   map,

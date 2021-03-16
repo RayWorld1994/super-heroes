@@ -1,4 +1,4 @@
-import { catchError, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {
   HttpRequest,

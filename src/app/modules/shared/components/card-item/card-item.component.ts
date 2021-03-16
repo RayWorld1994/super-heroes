@@ -4,7 +4,6 @@ import * as characterSelectors from 'src/app/modules/core/store/selectors/charac
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Character } from 'src/app/modules/core/interfaces/character/character.interface';
-import { Comic } from 'src/app/modules/core/interfaces/comic/comic.interface';
 import { ESizeThumbnail } from '../../utils/size-thumbnail.enum';
 
 @Component({

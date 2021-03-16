@@ -1,6 +1,5 @@
 import { characterAdapter, ICharacterState } from './../state/character.state';
 import { createSelector, createFeatureSelector } from '@ngrx/store';
-import { EOrderBy } from '../../utils/eorder-by.enum';
 import { Character } from '../../interfaces/character/character.interface';
 
 export const selectFeatureCharacter = createFeatureSelector<ICharacterState>(

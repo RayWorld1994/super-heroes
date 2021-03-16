@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
-import * as storySelectors from 'src/app/modules/core/store/selectors/story.selector';
 import * as storyActions from 'src/app/modules/core/store/actions/story.action';
 
 @Component({

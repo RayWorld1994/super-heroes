@@ -4,7 +4,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FilterComic } from 'src/app/modules/core/interfaces/filter-comic.interface';
 import * as comicActions from 'src/app/modules/core/store/actions/comic.action';
-import * as comicSelectores from 'src/app/modules/core/store/selectors/comic.selector';
 
 @Component({
   selector: 'app-filter-comic',

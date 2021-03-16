@@ -1,4 +1,3 @@
-import { cancelFilterCharacter } from './character.action';
 import { createAction, props } from '@ngrx/store';
 import { Comic } from '../../interfaces/comic/comic.interface';
 import { InfiniteScroolling } from '../../interfaces/scrolling.interface';

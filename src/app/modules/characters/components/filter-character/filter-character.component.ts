@@ -11,7 +11,6 @@ import {
   debounceTime,
   distinctUntilChanged,
   switchMap,
-  tap,
 } from 'rxjs/operators';
 import { SelectOneOptionValidator } from '../../validators/select-one-option.validator';
 import * as characterActions from 'src/app/modules/core/store/actions/character.action';
@@ -55,7 +54,6 @@ export class FilterCharacterComponent implements OnInit {
         }
         return of([]);
       }),
-      tap(console.log)
     ) as Observable<Comic[]>;
   }
 

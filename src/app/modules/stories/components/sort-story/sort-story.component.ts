@@ -4,7 +4,6 @@ import {
   faFilter,
   faSortAmountDown,
   faSortAmountDownAlt,
-  faSortAmountUp,
   faSortNumericDown,
   faSortNumericDownAlt,
 } from '@fortawesome/free-solid-svg-icons';

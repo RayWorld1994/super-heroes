@@ -1,5 +1,5 @@
 import { ScrollDispatcher } from '@angular/cdk/scrolling';
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-scroll-to-top',

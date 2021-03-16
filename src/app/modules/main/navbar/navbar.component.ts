@@ -1,4 +1,3 @@
-import { ScrollDispatcher } from '@angular/cdk/scrolling';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
@@ -6,7 +5,6 @@ import { delay, map, shareReplay } from 'rxjs/operators';
 import { Option } from '../Interfaces/option.interface';
 import { menuOption } from '../constants/menuOption';
 import { MatSidenav } from '@angular/material/sidenav';
-import { ActivatedRoute, Event, Router } from '@angular/router';
 import { LoadingService } from '../services/loading.service';
 
 @Component({
@@ -30,9 +28,6 @@ export class NavbarComponent {
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private route: ActivatedRoute,
-    private router: Router,
-    private scrollDispatcher: ScrollDispatcher,
     private loadingService: LoadingService
   ) {}
 
@@ -49,11 +44,5 @@ export class NavbarComponent {
     if (this.SideNav.mode === 'over') {
       this.SideNav.close();
     }
-  }
-
-  upToTop() {
-    this.scrollDispatcher
-      .getAncestorScrollContainers(this.elementRef)[0]
-      .scrollTo({ top: 0, behavior: 'auto' });
   }
 }

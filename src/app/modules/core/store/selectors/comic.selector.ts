@@ -1,4 +1,3 @@
-import { EOrderComicBy } from './../../utils/e-order-comic-by.enum';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { comicAdapter, IComicState } from '../state/comic.state';
 import { Comic } from '../../interfaces/comic/comic.interface';

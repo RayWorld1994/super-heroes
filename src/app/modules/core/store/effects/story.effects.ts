@@ -9,8 +9,6 @@ import {
   catchError,
   concatMap,
   withLatestFrom,
-  tap,
-  switchMap,
 } from 'rxjs/operators';
 import { StoryService } from 'src/app/modules/stories/services/story.service';
 import * as storyActions from '../actions/story.action';

@@ -1,7 +1,7 @@
 import { takeUntil } from 'rxjs/operators';
 import { ESizeThumbnail } from '../../../shared/utils/size-thumbnail.enum';
 import { Observable, Subject } from 'rxjs';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Character } from '../../../core/interfaces/character/character.interface';
