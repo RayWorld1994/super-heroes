@@ -8,10 +8,12 @@ const routes: Routes = [
   {
     path: '',
     component: CharacterLayoutComponent,
+    data: { title: 'characters' },
     children: [
       {
         path: '',
         component: CharactersListComponent,
+
       },
       {
         path: ':id_character',

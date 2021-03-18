@@ -15,7 +15,7 @@
     [opened]="(isHandset$ | async) === false"
   >
     <mat-toolbar color="primary" class="home">
-      <a routerLink="home" (click)="setTitle('marvel')">
+      <a routerLink="home">
         <img src="../../../../assets/marvel.svg" alt="Marvel Logo" />
       </a>
     </mat-toolbar>
@@ -27,7 +27,6 @@
         *ngFor="let optionEl of navOption"
         routerLinkActive="active"
         [routerLink]="[optionEl.route]"
-        (click)="setTitle(optionEl.option)"
       >
         <fa-icon class="icon" [icon]="optionEl.icon"></fa-icon>
         {{ optionEl.option }}</a

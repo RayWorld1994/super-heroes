@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TitlePageService } from 'src/app/modules/main/services/title-page.service';
 
 @Component({
   selector: 'app-comic-layout',
@@ -6,10 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./comic-layout.component.scss'],
 })
 export class ComicLayoutComponent implements OnInit {
-  constructor() {}
+  constructor(private titleService: TitlePageService) {}
 
   ngOnInit(): void {
+    this.titleService.titleSubject.next('Comics');
   }
-
-  searchAction() {}
 }

@@ -6,6 +6,7 @@ import { Option } from '../Interfaces/option.interface';
 import { menuOption } from '../constants/menuOption';
 import { MatSidenav } from '@angular/material/sidenav';
 import { LoadingService } from '../services/loading.service';
+import { TitlePageService } from '../services/title-page.service';
 
 @Component({
   selector: 'app-navbar',
@@ -28,19 +29,20 @@ export class NavbarComponent {
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private titleService: TitlePageService
   ) {}
 
   ngOnInit(): void {
     this.navOption = [...menuOption];
+    this.setTitle();
   }
 
   ngAfterViewInit(): void {
     this.isLoading = this.loadingService.isLoading.pipe(delay(0));
   }
 
-  setTitle(option: string) {
-    this.title = option;
-    this.SideNav.mode === 'over' ?? this.SideNav.close();
+  setTitle() {
+    this.titleService.titleSubject.subscribe((title) => (this.title = title));
   }
 }
