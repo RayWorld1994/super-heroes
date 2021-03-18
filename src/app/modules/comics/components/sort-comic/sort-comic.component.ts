@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import {
@@ -11,6 +12,7 @@ import { Store } from '@ngrx/store';
 import * as comicSelectors from 'src/app/modules/core/store/selectors/comic.selector';
 import * as comicActions from 'src/app/modules/core/store/actions/comic.action';
 import { SlideInOut } from 'src/app/modules/shared/animation/slideInOut';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-sort-comic',
@@ -24,6 +26,7 @@ export class SortComicComponent implements OnInit {
   faSortNumericDown = faSortNumericDown;
   faSortNumericDownAlt = faSortNumericDownAlt;
   faFilter = faFilter;
+  mapSubscription = new Subject();
 
   filterActivated = false;
   isFiltered!: boolean;
@@ -41,17 +44,20 @@ export class SortComicComponent implements OnInit {
   setSort() {
     this.store
       .select(comicSelectors.getOrderComic)
+      .pipe(takeUntil(this.mapSubscription))
       .subscribe((sortValue) =>
         this.sortControl.setValue(sortValue, { emitEvent: false })
       );
   }
 
   dispatchSortComic() {
-    this.sortControl.valueChanges.subscribe((sortValue) =>
-      this.store.dispatch(
-        comicActions.filterComics({ filter: { orderBy: sortValue } })
-      )
-    );
+    this.sortControl.valueChanges
+      .pipe(takeUntil(this.mapSubscription))
+      .subscribe((sortValue) =>
+        this.store.dispatch(
+          comicActions.filterComics({ filter: { orderBy: sortValue } })
+        )
+      );
   }
 
   toggleFilter() {
@@ -65,6 +71,7 @@ export class SortComicComponent implements OnInit {
   getIsFilter() {
     this.store
       .select(comicSelectors.getIsFiltered)
+      .pipe(takeUntil(this.mapSubscription))
       .subscribe((filter) => (this.isFiltered = filter));
   }
 
@@ -72,5 +79,11 @@ export class SortComicComponent implements OnInit {
     return this.filterActivated
       ? { color: 'warn', icon: 'close' }
       : { color: 'accent', icon: 'search' };
+  }
+
+  ngOnDestroy(): void {
+    this.mapSubscription.next();
+    this.mapSubscription.complete();
+    this.mapSubscription.unsubscribe();
   }
 }

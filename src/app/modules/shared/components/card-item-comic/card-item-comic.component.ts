@@ -1,6 +1,8 @@
+import { takeUntil } from 'rxjs/operators';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
 import { Comic } from 'src/app/modules/core/interfaces/comic/comic.interface';
 
 import * as comicActions from 'src/app/modules/core/store/actions/comic.action';
@@ -15,15 +17,19 @@ import { ESizeThumbnail } from 'src/app/modules/shared/utils/size-thumbnail.enum
 export class CardItemComicComponent implements OnInit {
   @Input() comic!: Comic;
   bookmark!: boolean;
+  mapSubscription = new Subject();
 
   size: string = ESizeThumbnail.standard_xlarge;
 
   constructor(private router: Router, private store: Store) {}
 
   ngOnInit(): void {
-    this.store.select(comicSelectors.getIdsBookmarks).subscribe((ids) => {
-      this.bookmark = ids.some((id) => this.comic.id === id);
-    });
+    this.store
+      .select(comicSelectors.getIdsBookmarks)
+      .pipe(takeUntil(this.mapSubscription))
+      .subscribe((ids) => {
+        this.bookmark = ids.some((id) => this.comic.id === id);
+      });
   }
 
   onSelectComic() {
@@ -56,5 +62,11 @@ export class CardItemComicComponent implements OnInit {
       : this.store.dispatch(
           comicActions.addComicBookmark({ id: Number(this.comic.id) })
         );
+  }
+
+  ngOnDestroy(): void {
+    this.mapSubscription.next();
+    this.mapSubscription.complete();
+    this.mapSubscription.unsubscribe();
   }
 }

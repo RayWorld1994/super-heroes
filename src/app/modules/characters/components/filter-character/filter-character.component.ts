@@ -65,7 +65,6 @@ export class FilterCharacterComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.filterForm.value);
     if (this.filterForm.valid) {
       this.store.dispatch(
         characterActions.filterCharacters({

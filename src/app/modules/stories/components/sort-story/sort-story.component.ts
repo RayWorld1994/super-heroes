@@ -12,6 +12,8 @@ import { Store } from '@ngrx/store';
 import * as storySelectors from 'src/app/modules/core/store/selectors/story.selector';
 import * as storyActions from 'src/app/modules/core/store/actions/story.action';
 import { SlideInOut } from 'src/app/modules/shared/animation/slideInOut';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sort-story',
@@ -31,6 +33,8 @@ export class SortStoryComponent implements OnInit {
 
   sortControl = new FormControl('');
 
+  mapSubscription = new Subject();
+
   constructor(private store: Store) {}
 
   ngOnInit(): void {
@@ -42,17 +46,20 @@ export class SortStoryComponent implements OnInit {
   setSort() {
     this.store
       .select(storySelectors.getOrderStory)
+      .pipe(takeUntil(this.mapSubscription))
       .subscribe((sortValue) =>
         this.sortControl.setValue(sortValue, { emitEvent: false })
       );
   }
 
   dispatchSortComic() {
-    this.sortControl.valueChanges.subscribe((sortValue) =>
-      this.store.dispatch(
-        storyActions.filterStories({ filter: { orderBy: sortValue } })
-      )
-    );
+    this.sortControl.valueChanges
+      .pipe(takeUntil(this.mapSubscription))
+      .subscribe((sortValue) =>
+        this.store.dispatch(
+          storyActions.filterStories({ filter: { orderBy: sortValue } })
+        )
+      );
   }
 
   toggleFilter() {
@@ -66,6 +73,7 @@ export class SortStoryComponent implements OnInit {
   getIsFilter() {
     this.store
       .select(storySelectors.getIsFiltered)
+      .pipe(takeUntil(this.mapSubscription))
       .subscribe((filter) => (this.isFiltered = filter));
   }
 
@@ -73,5 +81,11 @@ export class SortStoryComponent implements OnInit {
     return this.filterActivated
       ? { color: 'warn', icon: 'close' }
       : { color: 'accent', icon: 'search' };
+  }
+
+  ngOnDestroy(): void {
+    this.mapSubscription.next();
+    this.mapSubscription.complete();
+    this.mapSubscription.unsubscribe();
   }
 }

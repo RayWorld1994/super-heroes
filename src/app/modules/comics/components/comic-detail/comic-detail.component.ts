@@ -5,7 +5,14 @@ import { Component, OnInit } from '@angular/core';
 import { Comic } from 'src/app/modules/core/interfaces/comic/comic.interface';
 import * as comicSelectors from 'src/app/modules/core/store/selectors/comic.selector';
 import * as comicActions from 'src/app/modules/core/store/actions/comic.action';
-import { concatMap, exhaustMap, mergeMap, tap } from 'rxjs/operators';
+import {
+  concatMap,
+  exhaustMap,
+  mergeMap,
+  tap,
+  takeUntil,
+} from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-comic-detail',
@@ -16,6 +23,7 @@ export class ComicDetailComponent implements OnInit {
   size = ESizeThumbnail.detail;
   comic!: Comic | undefined;
   bookmark!: boolean;
+  mapSubscription = new Subject();
 
   constructor(private store: Store, private route: ActivatedRoute) {}
 
@@ -51,6 +59,7 @@ export class ComicDetailComponent implements OnInit {
     this.store
       .select(comicSelectors.getCurrentComic)
       .pipe(
+        takeUntil(this.mapSubscription),
         tap((comic) => {
           this.comic = comic;
         }),
@@ -61,7 +70,9 @@ export class ComicDetailComponent implements OnInit {
       });
   }
 
-  onClick() {
-    console.log(this.comic);
+  ngOnDestroy(): void {
+    this.mapSubscription.next();
+    this.mapSubscription.complete();
+    this.mapSubscription.unsubscribe();
   }
 }

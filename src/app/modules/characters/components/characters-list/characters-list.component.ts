@@ -42,6 +42,7 @@ export class CharactersListComponent implements OnInit {
     );
     this.store
       .select(characterSelectors.getIsFiltered)
+      .pipe(takeUntil(this.mapSubscription))
       .subscribe((isFiltered) => (this.isFiltered = isFiltered));
     this.scrollEvent();
     this.getSort();
@@ -68,6 +69,7 @@ export class CharactersListComponent implements OnInit {
   getSort() {
     return this.store
       .select(characterSelectors.getOrderCharacter)
+      .pipe(takeUntil(this.mapSubscription))
       .subscribe((order) => {
         this.icon =
           order === EOrderBy.OrderAtoZ ? faSortAlphaDown : faSortAlphaDownAlt;
@@ -86,15 +88,15 @@ export class CharactersListComponent implements OnInit {
     }
   }
 
+  get onButtonSearchState() {
+    return this.searchActivated
+    ? { color: 'warn', icon: 'close' }
+    : { color: 'accent', icon: 'search' };
+  }
+
   ngOnDestroy(): void {
     this.mapSubscription.next();
     this.mapSubscription.complete();
     this.mapSubscription.unsubscribe();
-  }
-
-  get onButtonSearchState() {
-    return this.searchActivated
-      ? { color: 'warn', icon: 'close' }
-      : { color: 'accent', icon: 'search' };
   }
 }

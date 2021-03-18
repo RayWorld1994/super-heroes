@@ -15,7 +15,7 @@ import { ListByCharacter } from '../../interfaces/listByCharacter.interface';
   styleUrls: ['./character-detail.component.scss'],
 })
 export class CharacterDetailComponent implements OnInit {
-  MapSubscribe = new Subject<void>();
+  mapSubscription = new Subject<void>();
   listsByCharacter!: ListByCharacter[];
   bookmark: boolean = false;
 
@@ -36,7 +36,7 @@ export class CharacterDetailComponent implements OnInit {
 
     this.store
       .select(characterSelectors.getlistByCharacter)
-      .pipe(takeUntil(this.MapSubscribe))
+      .pipe(takeUntil(this.mapSubscription))
       .subscribe((lists) => {
         this.listsByCharacter = lists;
       });
@@ -47,6 +47,7 @@ export class CharacterDetailComponent implements OnInit {
     this.store
       .select(characterSelectors.getCurrentCharacter)
       .pipe(
+        takeUntil(this.mapSubscription),
         tap((character) => {
           this.character = character;
         }),
@@ -76,7 +77,7 @@ export class CharacterDetailComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.MapSubscribe.next();
-    this.MapSubscribe.unsubscribe();
+    this.mapSubscription.next();
+    this.mapSubscription.unsubscribe();
   }
 }

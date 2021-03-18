@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Story } from 'src/app/modules/core/interfaces/story/story.interface';
 import { ESizeThumbnail } from 'src/app/modules/shared/utils/size-thumbnail.enum';
 
@@ -7,7 +7,7 @@ import * as storySelectors from 'src/app/modules/core/store/selectors/story.sele
 import * as storyActions from 'src/app/modules/core/store/actions/story.action';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
-import { concatMap, tap } from 'rxjs/operators';
+import { concatMap, tap, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-story-detail',
@@ -18,6 +18,7 @@ export class StoryDetailComponent implements OnInit {
   size = ESizeThumbnail.detail;
   story: Story | undefined;
   bookmark = false;
+  mapSubscription = new Subject();
 
   constructor(private store: Store, private route: ActivatedRoute) {}
 
@@ -40,6 +41,7 @@ export class StoryDetailComponent implements OnInit {
         }),
         concatMap(() => this.store.select(storySelectors.getIdsBookmarks))
       )
+      .pipe(takeUntil(this.mapSubscription))
       .subscribe((ids) => {
         this.bookmark = ids.some((id) => this.story?.id === id);
       });
@@ -61,5 +63,11 @@ export class StoryDetailComponent implements OnInit {
 
   get iconBookmarkState() {
     return this.bookmark ? 'accent' : null;
+  }
+
+  ngOnDestroy(): void {
+    this.mapSubscription.next();
+    this.mapSubscription.complete();
+    this.mapSubscription.unsubscribe();
   }
 }

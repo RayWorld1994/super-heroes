@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Story } from 'src/app/modules/core/interfaces/story/story.interface';
 
 import * as storyActions from 'src/app/modules/core/store/actions/story.action';
@@ -15,15 +17,19 @@ import { ESizeThumbnail } from 'src/app/modules/shared/utils/size-thumbnail.enum
 export class CardItemStoryComponent implements OnInit {
   @Input() story!: Story;
   bookmark!: boolean;
+  mapSubscription = new Subject();
 
   size: string = ESizeThumbnail.standard_xlarge;
 
   constructor(private router: Router, private store: Store) {}
 
   ngOnInit(): void {
-    this.store.select(storySelectors.getIdsBookmarks).subscribe((ids) => {
-      this.bookmark = ids.some((id) => this.story.id === id);
-    });
+    this.store
+      .select(storySelectors.getIdsBookmarks)
+      .pipe(takeUntil(this.mapSubscription))
+      .subscribe((ids) => {
+        this.bookmark = ids.some((id) => this.story.id === id);
+      });
   }
 
   onSelectComic() {
@@ -56,5 +62,11 @@ export class CardItemStoryComponent implements OnInit {
       : this.store.dispatch(
           storyActions.addStoryBookmark({ id: Number(this.story.id) })
         );
+  }
+
+  ngOnDestroy(): void {
+    this.mapSubscription.next();
+    this.mapSubscription.complete();
+    this.mapSubscription.unsubscribe();
   }
 }

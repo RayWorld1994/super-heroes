@@ -1,3 +1,5 @@
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as characterAction from 'src/app/modules/core/store/actions/character.action';
 import * as characterSelectors from 'src/app/modules/core/store/selectors/character.selector';
@@ -15,6 +17,7 @@ export class CardItemComponent implements OnInit {
   @Input() element!: Character;
   title!: string;
   bookmark!: boolean;
+  mapSubscription = new Subject();
 
   size: string = ESizeThumbnail.standard_xlarge;
 
@@ -25,9 +28,12 @@ export class CardItemComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.store.select(characterSelectors.getIdsBookmarks).subscribe((ids) => {
-      this.bookmark = ids.some((id) => this.element.id === id);
-    });
+    this.store
+      .select(characterSelectors.getIdsBookmarks)
+      .pipe(takeUntil(this.mapSubscription))
+      .subscribe((ids) => {
+        this.bookmark = ids.some((id) => this.element.id === id);
+      });
   }
 
   onSelectCharacter() {
@@ -48,5 +54,11 @@ export class CardItemComponent implements OnInit {
 
   get iconBookmarkState() {
     return this.bookmark ? 'accent' : null;
+  }
+
+  ngOnDestroy(): void {
+    this.mapSubscription.next();
+    this.mapSubscription.complete();
+    this.mapSubscription.unsubscribe();
   }
 }
