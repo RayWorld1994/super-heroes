@@ -50,9 +50,7 @@ export class CharacterDetailComponent implements OnInit {
         tap((character) => {
           this.character = character;
         }),
-        concatMap(() => {
-          return this.store.select(characterSelectors.getIdsBookmarks);
-        })
+        concatMap(() => this.store.select(characterSelectors.getIdsBookmarks))
       )
       .subscribe((ids) => {
         this.bookmark = ids.some((id) => this.character?.id === id);
