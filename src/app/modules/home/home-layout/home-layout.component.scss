@@ -1,0 +1,23 @@
+@import './variables.scss';
+
+.img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  right: 0;
+  height: calc(100vh - 64px);
+  width: 100%;
+  background-image: url('../../../../assets/home.jpg');
+  background-position: center center;
+  background-size: cover;
+
+  .title-home {
+    text-transform: uppercase;
+    color: white;
+    text-shadow: -5px -4px 5px $accent-color, 0 1px $accent-color,
+      1px 0 $accent-color, 0 -1px $accent-color;
+  }
+}
