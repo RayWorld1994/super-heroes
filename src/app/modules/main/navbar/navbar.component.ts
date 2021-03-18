@@ -41,8 +41,6 @@ export class NavbarComponent {
 
   setTitle(option: string) {
     this.title = option;
-    if (this.SideNav.mode === 'over') {
-      this.SideNav.close();
-    }
+    this.SideNav.mode === 'over' ?? this.SideNav.close();
   }
 }
