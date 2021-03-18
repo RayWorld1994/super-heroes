@@ -60,7 +60,6 @@ export class SortComicComponent implements OnInit {
       this.store.dispatch(comicActions.cancelFilterComic());
       this.store.dispatch(comicActions.getComics());
     }
-    console.log(this.isFiltered)
   }
 
   getIsFilter() {

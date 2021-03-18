@@ -18,17 +18,12 @@ export class CardItemComicComponent implements OnInit {
 
   size: string = ESizeThumbnail.standard_xlarge;
 
-  constructor(
-    private router: Router,
-    private store: Store
-  ) {}
+  constructor(private router: Router, private store: Store) {}
 
   ngOnInit(): void {
     this.store.select(comicSelectors.getIdsBookmarks).subscribe((ids) => {
       this.bookmark = ids.some((id) => this.comic.id === id);
     });
-
-    console.log(this.bookmark);
   }
 
   onSelectComic() {

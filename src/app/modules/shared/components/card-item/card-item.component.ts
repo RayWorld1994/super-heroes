@@ -49,16 +49,4 @@ export class CardItemComponent implements OnInit {
   get iconBookmarkState() {
     return this.bookmark ? 'accent' : null;
   }
-
-  bookmarkComic(){
-    this.bookmark
-      ? this.store.dispatch(
-          characterAction.removeCharacterBookmark({
-            id: Number(this.element.id),
-          })
-        )
-      : this.store.dispatch(
-          characterAction.addCharacterBookmark({ id: Number(this.element.id) })
-        );
-  }
 }
