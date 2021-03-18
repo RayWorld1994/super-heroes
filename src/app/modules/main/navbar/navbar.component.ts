@@ -43,6 +43,8 @@ export class NavbarComponent {
   }
 
   setTitle() {
-    this.titleService.titleSubject.subscribe((title) => (this.title = title));
+    this.titleService.titleSubject
+      .pipe(delay(0))
+      .subscribe((title) => (this.title = title));
   }
 }
