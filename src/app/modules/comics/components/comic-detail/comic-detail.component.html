@@ -1,4 +1,4 @@
-<div class="container-comic" *ngIf="comic$ | async as comic">
+<div class="container-comic" *ngIf="comic">
   <mat-card>
     <img
       mat-card-image
@@ -9,6 +9,15 @@
     />
 
     <mat-card-header>
+      <button
+        [color]="iconBookmarkState"
+        mat-icon-button
+        class="bookmark"
+        (click)="addRemoveBookmark()"
+      >
+        <mat-icon *ngIf="!bookmark">turned_in_not</mat-icon>
+        <mat-icon *ngIf="bookmark">turned_in</mat-icon>
+      </button>
       <mat-card-title>{{ comic.title }}</mat-card-title>
     </mat-card-header>
 
@@ -43,3 +52,5 @@
     </mat-card-content>
   </mat-card>
 </div>
+
+<button mat-button (click)="onClick()">Action</button>

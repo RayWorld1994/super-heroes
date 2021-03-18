@@ -7,6 +7,7 @@ import * as storySelectors from 'src/app/modules/core/store/selectors/story.sele
 import * as storyActions from 'src/app/modules/core/store/actions/story.action';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
+import { concatMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-story-detail',
@@ -15,9 +16,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class StoryDetailComponent implements OnInit {
   size = ESizeThumbnail.detail;
-  story$ = this.store.select(
-    storySelectors.getCurrentStorie
-  ) as Observable<Story>;
+  story: Story | undefined;
+  bookmark = false;
 
   constructor(private store: Store, private route: ActivatedRoute) {}
 
@@ -27,5 +27,39 @@ export class StoryDetailComponent implements OnInit {
         storyActions.storySelected({ id: Number(params.get('id_story')) })
       );
     });
+
+    this.getStory();
+  }
+
+  getStory() {
+    this.store
+      .select(storySelectors.getCurrentStorie)
+      .pipe(
+        tap((story) => {
+          this.story = story;
+        }),
+        concatMap(() => this.store.select(storySelectors.getIdsBookmarks))
+      )
+      .subscribe((ids) => {
+        this.bookmark = ids.some((id) => this.story?.id === id);
+      });
+  }
+
+  addRemoveBookmark() {
+    this.bookmark
+      ? this.store.dispatch(
+          storyActions.removeStoryBookmark({
+            id: Number(this.story?.id),
+          })
+        )
+      : this.store.dispatch(
+          storyActions.addStoryBookmark({
+            id: Number(this.story?.id),
+          })
+        );
+  }
+
+  get iconBookmarkState() {
+    return this.bookmark ? 'accent' : null;
   }
 }

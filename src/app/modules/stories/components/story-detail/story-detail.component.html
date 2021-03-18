@@ -1,10 +1,24 @@
-<div class="container-story" *ngIf="story$ | async as story">
+<div class="container-story" *ngIf="story">
   <mat-card>
-    <img mat-card-image [appThumbnailSize]="size" [srcThumbnail]="story.thumbnail?.path" class="img-hero"
-      src-fallback="assets/marvel-default.jpg" />
+    <img
+      mat-card-image
+      [appThumbnailSize]="size"
+      [srcThumbnail]="story.thumbnail?.path"
+      class="img-hero"
+      src-fallback="assets/marvel-default.jpg"
+    />
 
     <mat-card-header>
       <mat-card-title>{{ story.title }}</mat-card-title>
+      <button
+        [color]="iconBookmarkState"
+        mat-icon-button
+        class="bookmark"
+        (click)="addRemoveBookmark()"
+      >
+        <mat-icon *ngIf="!bookmark">turned_in_not</mat-icon>
+        <mat-icon *ngIf="bookmark">turned_in</mat-icon>
+      </button>
     </mat-card-header>
 
     <mat-card-content>
@@ -16,7 +30,7 @@
         <mat-list>
           <mat-list-item *ngFor="let character of story.characters.items">{{
             character.name
-            }}</mat-list-item>
+          }}</mat-list-item>
         </mat-list>
       </div>
       <div class="creators-list" *ngIf="story.creators.items.length > 0">
@@ -24,7 +38,7 @@
         <mat-list>
           <mat-list-item *ngFor="let creator of story.creators.items">{{
             creator.name
-            }}</mat-list-item>
+          }}</mat-list-item>
         </mat-list>
       </div>
       <div class="creators-list" *ngIf="story.comics.items.length > 0">
@@ -32,7 +46,7 @@
         <mat-list>
           <mat-list-item *ngFor="let story of story.comics.items">{{
             story.name
-            }}</mat-list-item>
+          }}</mat-list-item>
         </mat-list>
       </div>
     </mat-card-content>

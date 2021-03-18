@@ -1,7 +1,6 @@
 .container-comic {
   display: flex;
   justify-content: center;
-
 }
 
 .mat-card {
@@ -12,4 +11,22 @@
 .sub-title {
   margin: 0;
   font-weight: bold;
+}
+
+.bookmark {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 4;
+  .mat-icon {
+    font-size: 40px;
+    margin-right: 10px;
+    font-weight: 100;
+  }
+}
+
+.mat-card-header {
+  position: relative;
+  padding-right: 30px;
 }

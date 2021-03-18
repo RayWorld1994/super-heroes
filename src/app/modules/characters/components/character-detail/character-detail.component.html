@@ -1,27 +1,38 @@
-<div class="container-character" *ngIf="character$ | async as character">
+<div class="container-character" *ngIf="character">
   <mat-card class="card-grid">
     <div class="img-container">
       <div
         class="background"
         [appThumbnailSize]="size"
-        [srcThumbnail]="character.thumbnail.path"
+        [srcThumbnail]="character?.thumbnail?.path"
       ></div>
       <img
         [appThumbnailSize]="size"
         [srcThumbnail]="character?.thumbnail?.path"
-        class="img-hero"
         src-fallback="assets/marvel-default.jpg"
+        class="img-hero"
       />
     </div>
 
     <mat-card-header>
-      <mat-card-title>{{ character.name }}</mat-card-title>
+      <button
+        [color]="iconBookmarkState"
+        mat-icon-button
+        class="bookmark"
+        (click)="addRemoveBookmark()"
+      >
+        <mat-icon *ngIf="!bookmark">turned_in_not</mat-icon>
+        <mat-icon *ngIf="bookmark">turned_in</mat-icon>
+      </button>
+      <mat-card-title>{{ character?.name }}</mat-card-title>
     </mat-card-header>
 
     <mat-card-content>
       <div class="description">
         <p>
-          {{ character.description ? character.description : 'No description' }}
+          {{
+            character?.description ? character?.description : 'No description'
+          }}
         </p>
       </div>
       <div class="lists">

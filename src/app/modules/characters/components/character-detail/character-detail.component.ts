@@ -1,6 +1,6 @@
-import { takeUntil } from 'rxjs/operators';
+import { concatMap, takeUntil, tap } from 'rxjs/operators';
 import { ESizeThumbnail } from '../../../shared/utils/size-thumbnail.enum';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -17,10 +17,9 @@ import { ListByCharacter } from '../../interfaces/listByCharacter.interface';
 export class CharacterDetailComponent implements OnInit {
   MapSubscribe = new Subject<void>();
   listsByCharacter!: ListByCharacter[];
+  bookmark: boolean = false;
 
-  character$ = this.store.select(
-    characterSelectors.getCurrentCharacter
-  ) as Observable<Character>;
+  character!: Character | undefined;
 
   size = ESizeThumbnail.detail;
 
@@ -41,6 +40,41 @@ export class CharacterDetailComponent implements OnInit {
       .subscribe((lists) => {
         this.listsByCharacter = lists;
       });
+    this.getCharacter();
+  }
+
+  getCharacter() {
+    this.store
+      .select(characterSelectors.getCurrentCharacter)
+      .pipe(
+        tap((character) => {
+          this.character = character;
+        }),
+        concatMap(() => {
+          return this.store.select(characterSelectors.getIdsBookmarks);
+        })
+      )
+      .subscribe((ids) => {
+        this.bookmark = ids.some((id) => this.character?.id === id);
+      });
+  }
+
+  addRemoveBookmark() {
+    this.bookmark
+      ? this.store.dispatch(
+          characterAction.removeCharacterBookmark({
+            id: Number(this.character?.id),
+          })
+        )
+      : this.store.dispatch(
+          characterAction.addCharacterBookmark({
+            id: Number(this.character?.id),
+          })
+        );
+  }
+
+  get iconBookmarkState() {
+    return this.bookmark ? 'accent' : null;
   }
 
   ngOnDestroy(): void {

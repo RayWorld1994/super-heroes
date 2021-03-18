@@ -1,11 +1,11 @@
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { ESizeThumbnail } from './../../../shared/utils/size-thumbnail.enum';
 import { Component, OnInit } from '@angular/core';
 import { Comic } from 'src/app/modules/core/interfaces/comic/comic.interface';
 import * as comicSelectors from 'src/app/modules/core/store/selectors/comic.selector';
 import * as comicActions from 'src/app/modules/core/store/actions/comic.action';
+import { concatMap, exhaustMap, mergeMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-comic-detail',
@@ -14,14 +14,10 @@ import * as comicActions from 'src/app/modules/core/store/actions/comic.action';
 })
 export class ComicDetailComponent implements OnInit {
   size = ESizeThumbnail.detail;
-  comic$ = this.store.select(
-    comicSelectors.getCurrentComic
-  ) as Observable<Comic>;
+  comic!: Comic | undefined;
+  bookmark!: boolean;
 
-  constructor(
-    private store: Store,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private store: Store, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -29,5 +25,43 @@ export class ComicDetailComponent implements OnInit {
         comicActions.comicSelected({ id: Number(params.get('id_comic')) })
       );
     });
+
+    this.getComic();
+  }
+
+  get iconBookmarkState() {
+    return this.bookmark ? 'accent' : null;
+  }
+
+  addRemoveBookmark() {
+    this.bookmark
+      ? this.store.dispatch(
+          comicActions.removeComicBookmark({
+            id: Number(this.comic?.id),
+          })
+        )
+      : this.store.dispatch(
+          comicActions.addComicBookmark({
+            id: Number(this.comic?.id),
+          })
+        );
+  }
+
+  getComic() {
+    this.store
+      .select(comicSelectors.getCurrentComic)
+      .pipe(
+        tap((comic) => {
+          this.comic = comic;
+        }),
+        concatMap(() => this.store.select(comicSelectors.getIdsBookmarks))
+      )
+      .subscribe((ids) => {
+        this.bookmark = ids.some((id) => this.comic?.id === id);
+      });
+  }
+
+  onClick() {
+    console.log(this.comic);
   }
 }
