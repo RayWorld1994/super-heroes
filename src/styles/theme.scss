@@ -1,7 +1,23 @@
 @import '~@angular/material/theming';
 @import './custom-palettes';
 
-@include mat-core();
+$marvel-typography-theme: (
+  typography:
+    mat-typography-config(
+      $font-family: 'Marvel, sans-serif',
+      $headline: mat-typography-level(32px, 48px, 700),
+      $body-1: mat-typography-level(20px, 20px, 500),
+      $body-2: mat-typography-level(20px, 24px, 500),
+      $button: mat-typography-level(18px, 24px, 500),
+      $subheading-2: mat-typography-level(18px, 24px, 400),
+      $subheading-1: mat-typography-level(20px, 24px, 400),
+      $display-4:
+        mat-typography-level(112px, 112px, 600, $letter-spacing: 0rem),
+    ),
+);
+
+@include mat-core($marvel-typography-theme);
+@include mat-button-typography($marvel-typography-theme);
 
 $marvel-theme-primary: mat-palette($marvel-big-stone);
 $marvel-theme-accent: mat-palette($marvel-Matisse, A200, A100, A400);

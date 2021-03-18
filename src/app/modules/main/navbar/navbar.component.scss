@@ -51,6 +51,7 @@
 
 .content {
   padding: 20px;
+  position: relative;
 }
 
 .search {
@@ -67,5 +68,5 @@
 @media (max-width: 599px) {
   .mat-toolbar-single-row {
     height: 64px;
-}
+  }
 }
