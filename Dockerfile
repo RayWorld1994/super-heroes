@@ -1,12 +1,10 @@
-FROM node:12.21.0-alpine3.10 AS compile-image
-
-# RUN mkdir app
-WORKDIR /app
+FROM node:12.7-alpine AS build
+WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN npm install
-
 COPY . .
-RUN node_modules/.bin/ng build --prod
+RUN npm run build
 
-FROM nginx:1.19.8-alpine
-COPY --from=compile-image /app/dist/super-heroes /usr/share/ngingx/html
+FROM nginx:1.17.1-alpine
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY --from=build /usr/src/app/dist/super-heroes /usr/share/nginx/html
